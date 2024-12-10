@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Nexus</string>
+    <string name="login">تسجيل الدخول </string>
+    <string name="don_t_have_an_account">ليس لديك حساب؟</string>
+    <string name="sign_up_now">سجل الان </string>
+    <string name="start_meeting">ابدأ الاجتماع </string>
+    <string name="schedule">جدولة اجتماع</string>
+    <string name="comming_soon">قريبا</string>
+    <string name="search">ابحث</string>
+    <string name="welcome">اهلا بك </string>
+    <string name="back">مجددا! </string>
+    <string name="enter_your_email">ادخل بريدك الالكتروني</string>
+    <string name="enter_your_password">ادخل كلمة المرور</string>
+    <string name="forgot_password">هل نسيت كلمة المرور؟</string>
+    <string name="create_an">"انشئ   "</string>
+    <string name="account">حساب الان!  </string>
+    <string name="select_your_role">حدد منصبك:</string>
+    <string name="user">مستخدم</string>
+    <string name="instructor">مؤسسة</string>
+    <string name="username">اسم المستخدم</string>
+    <string name="confirm_your_password">تأكيد كلمة المرور</string>
+    <string name="sign_up">تسجيل</string>
+    <string name="already_have_an_account">لديك حساب بالفعل؟</string>
+</resources>
