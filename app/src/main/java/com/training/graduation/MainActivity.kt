@@ -69,13 +69,13 @@ fun AppNavigation(modifier: Modifier) {
 
         }
         composable(route = "userprofile") {
-            UserProfileScreen()
+            UserProfileScreen(navController)
         }
         composable(route = "chat") {
-            ChatListScreen(navController)
+            ChatListScreen(modifier, navController, innerpadding = PaddingValues())
         }
         composable(route = "group") {
-            GroupListScreen()
+            GroupListScreen(navController)
         }
 
     }

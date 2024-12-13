@@ -171,7 +171,7 @@ fun HomeScreen(modifier: Modifier,navController:NavController, innerpadding: Pad
             }
 
             Spacer(modifier = Modifier.height(70.dp))
-            BottomNavigationBar(navController = NavController(LocalContext.current))
+            BottomNavigationBar(navController = navController)
 
 
         }
