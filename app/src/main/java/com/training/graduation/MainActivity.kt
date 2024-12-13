@@ -25,6 +25,7 @@ import com.training.graduation.screens.HomeScreen
 import com.training.graduation.screens.LoginScreen
 import com.training.graduation.screens.SignupScreen
 import com.training.graduation.screens.SplashScreen
+import com.training.graduation.screens.StartMeetingScreen
 import com.training.graduation.screens.StartScreen
 import com.training.graduation.screens.UserProfileScreen
 import com.training.graduation.ui.theme.GraduationTheme
@@ -69,14 +70,19 @@ fun AppNavigation(modifier: Modifier) {
 
         }
         composable(route = "userprofile") {
-            UserProfileScreen()
+            UserProfileScreen(navController)
         }
         composable(route = "chat") {
-            ChatListScreen(navController)
+            ChatListScreen(modifier, navController, innerpadding = PaddingValues())
         }
         composable(route = "group") {
-            GroupListScreen()
+            GroupListScreen(navController)
         }
+
+
+        composable("home") { HomeScreen(navController = navController, modifier = Modifier, innerpadding = PaddingValues()) }
+        composable("startMeeting") { StartMeetingScreen() }
+
 
     }
 }

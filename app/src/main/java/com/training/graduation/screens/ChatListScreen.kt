@@ -6,6 +6,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -42,6 +43,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.training.graduation.R
+import com.training.graduation.navigation.BottomNavigationBar
 import java.util.Date
 import java.util.Locale
 
@@ -52,27 +54,32 @@ data class Chat(
     val lastMessageTime: Long,
     val unreadMessages: Int
 )
+
 @Composable
-fun ChatListScreen(navController: NavController){
+fun ChatListScreen(  modifier: Modifier,navController: NavController, innerpadding: PaddingValues) {
     val chats = remember { mutableStateListOf<Chat>() }
-    val query= remember { mutableStateOf("") }
+    val query = remember { mutableStateOf("") }
     LaunchedEffect(Unit) {
         chats.clear()
-
-
     }
     Column(modifier = Modifier.fillMaxSize()) {
-            Spacer(modifier = Modifier.height(130.dp))
-        SearchBar(onSearch = { query ->
-            println("Search query: $query")
-        },
-            modifier = Modifier.weight(1f))
-        LazyColumn(modifier = Modifier.fillMaxSize()){
+        Spacer(modifier = Modifier.height(130.dp))
+        SearchBar(
+            onSearch = { query ->
+                println("Search query: $query")
+            },
+            modifier = Modifier.weight(1f)
+        )
+        Spacer(modifier = Modifier.height(70.dp))
+        BottomNavigationBar(navController = navController)
+
+        LazyColumn(modifier = Modifier.fillMaxSize()) {
             items(chats.filter { it.userName.contains(query.value, ignoreCase = true) }) { chat ->
 
-                ChatItem(chat, navController)
+                ChatItem( chat, navController)
             }
         }
+
     }
 
 }
@@ -88,33 +95,46 @@ fun ChatListScreen(navController: NavController){
 //}
 
 @Composable
-fun ChatItem(chat: Chat, navController: NavController){
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(16.dp)
-            .clickable {
-                // الانتقال إلى شاشة الدردشة الخاصة
-                navController.navigate("chat/${chat.userEmail}")
-            },
-        verticalAlignment = Alignment.CenterVertically
-    ){
-        Icon(Icons.Default.Chat, contentDescription = "Chat Icon")
-        Spacer(modifier = Modifier.width(16.dp))
-        Column(modifier = Modifier.weight(1f)) {
-            Text(text = chat.userName, fontWeight = FontWeight.Bold)
-            Text(text = chat.lastMessage, maxLines = 1, overflow = TextOverflow.Ellipsis)
-        }
-        if (chat.unreadMessages > 0) {
-            Badge(
-                modifier = Modifier.padding(start = 8.dp),
-                content = { Text(text = chat.unreadMessages.toString()) }
-            )
-        }
-        Text(text = SimpleDateFormat("HH:mm", Locale.getDefault()).format(Date(chat.lastMessageTime)))
+fun ChatItem(
 
+    chat: Chat,
+    navController: NavController
+
+) {
+
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp)
+                .clickable {
+                    // الانتقال إلى شاشة الدردشة الخاصة
+                    navController.navigate("chat/${chat.userEmail}")
+                },
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Icon(Icons.Default.Chat, contentDescription = "Chat Icon")
+            Spacer(modifier = Modifier.width(16.dp))
+            Column(modifier = Modifier.weight(1f)) {
+                Text(text = chat.userName, fontWeight = FontWeight.Bold)
+                Text(text = chat.lastMessage, maxLines = 1, overflow = TextOverflow.Ellipsis)
+            }
+            if (chat.unreadMessages > 0) {
+                Badge(
+                    modifier = Modifier.padding(start = 8.dp),
+                    content = { Text(text = chat.unreadMessages.toString()) }
+                )
+            }
+            Text(
+                text = SimpleDateFormat(
+                    "HH:mm",
+                    Locale.getDefault()
+                ).format(Date(chat.lastMessageTime))
+            )
+
+        }
     }
-}
+
+
 
 //data class Chat(val userName: String, val lastMessage: String, val time: String)
 //
@@ -194,5 +214,5 @@ fun ChatItem(chat: Chat, navController: NavController){
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 fun ChatListScreenPreview() {
-    ChatListScreen(navController = NavController(LocalContext.current))
+    ChatListScreen(modifier = Modifier, innerpadding = PaddingValues(), navController = NavController(LocalContext.current))
 }
