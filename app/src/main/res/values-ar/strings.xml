@@ -22,4 +22,41 @@
     <string name="confirm_your_password">تأكيد كلمة المرور</string>
     <string name="sign_up">تسجيل</string>
     <string name="already_have_an_account">لديك حساب بالفعل؟</string>
+
+    <string name="Edit_Profile">تعديل الملف</string>
+    <string name="ContactInformation">معلومات الاتصال</string>
+    <string name="Email">ايميل</string>
+    <string name="Light">ساطع</string>
+    <string name="English">انجليزي</string>
+    <string name="Settings">الاعدادات</string>
+    <string name="Dark">غامق</string>
+    <string name="Arabic">عربي</string>
+    <string name="Save">حفظ</string>
+    <string name="Cancel">الغاء</string>
+    <string name="Notification">الاشعارات</string>
+    <string name="Privacy">الخصوصيه</string>
+    <string name="Help">مساعدات</string>
+    <string name="Add_another_account">اضافه حساب اخر</string>
+    <string name="Enter_Email">ادخل ايميلك الجديد:</string>
+    <string name="Add">اضافه</string>
+    <string name="SignOut">خروج</string>
+    <string name="Themes">السمات</string>
+    <string name="Languages">اللغات</string>
+    <string name="Edit_photo">تعديل الصوره</string>
+    <string name="edit">تعديل</string>
+    <string name="Password">الباسورد</string>
+    <string name="Are_you_sure_you_want_to_sign_out">هل أنت متأكد أنك تريد تسجيل الخروج؟</string>
+    <string name="Yes">نعم</string>
+    <string name="No">لا</string>
+    <string name="select_date">أختر التاريخ</string>
+    <string name="meetings_scheduled">الاجتماعات المجدولة</string>
+    <string name="meeting_title">عنوان الاجتماع</string>
+    <string name="meeting_name">أسم الاجتماع</string>
+    <string name="date_and_time">التاريخ والوقت</string>
+    <string name="date_is_required">التاريخ مطلوب</string>
+    <string name="meeting_name_is_required">أسم الاجتماع مطلوب</string>
+    <string name="meeting_description">وصف الاجتماع</string>
+    <string name="description_is_required">وصف الاجتماع مطلوب</string>
+    <string name="description">الوصف</string>
+
 </resources>
