@@ -6,12 +6,14 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -25,6 +27,15 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 
 import com.training.graduation.R
+
+
+
+@Preview(showBackground = true, showSystemUi = true)
+@Composable
+fun BottomNavigationBarPreview() {
+    BottomNavigationBar(navController = NavController(LocalContext.current))
+}
+
 
 @Composable
 fun BottomNavigationBar(navController: NavController) {
@@ -57,48 +68,72 @@ fun BottomNavigationBar(navController: NavController) {
                 NavigationBarItem(
                     icon = {
                         Icon(
-                            painter = painterResource(id = R.drawable.ic_home),
+                            painter = painterResource(id = R.drawable.home_icon),
                             contentDescription = "Home",
                             tint = if (currentRoute == "homescreen") Color.White else Color.White,
-                            modifier = Modifier.wrapContentSize(Alignment.Center)
+                            modifier = Modifier.wrapContentSize(Alignment.Center).size(25.dp)
                         )
+                    },
+                    label = {
+                        if (currentRoute == "homescreen") {
+                            Text(
+                                text = "Home",
+                                color = Color.White
+                            )
+                        }
                     },
                     selected = currentRoute == "homescreen",
                     onClick = {
                         navController.navigate("homescreen") {
-                          popUpTo(0) { inclusive = true }
+                            popUpTo(0) { inclusive = true }
                         }
                     }
                 )
                 NavigationBarItem(
                     icon = {
                         Icon(
-                            painter = painterResource(id = R.drawable.ic_chat),
+                            painter = painterResource(id = R.drawable.message_icon),
                             contentDescription = "Chat",
                             tint = if (currentRoute == "chat") Color.White else Color.White,
-                            modifier = Modifier.wrapContentSize(Alignment.Center)
+                            modifier = Modifier.wrapContentSize(Alignment.Center).size(25.dp)
                         )
+                    },
+                    label = {
+                        if (currentRoute == "chat") {
+                            Text(
+                                text = "Chat",
+                                color = Color.White
+                            )
+                        }
                     },
                     selected = currentRoute == "chat",
                     onClick = {
                         navController.navigate("chat") {
-                           popUpTo(0) { inclusive = true }
+                            popUpTo(0) { inclusive = true }
                         }
                     }
                 )
                 NavigationBarItem(
                     icon = {
                         Icon(
-                            painter = painterResource(id = R.drawable.ic_group),
+                            painter = painterResource(id = R.drawable.group_icon),
                             contentDescription = "Group",
                             tint = if (currentRoute == "group") Color.White else Color.White,
-                            modifier = Modifier.wrapContentSize(Alignment.Center)
+                            modifier = Modifier.wrapContentSize(Alignment.Center).size(25.dp)
                         )
+                    },
+                    label = {
+                        if (currentRoute == "group") {
+                            Text(
+                                text = "Group",
+                                color = Color.White
+                            )
+                        }
                     },
                     selected = currentRoute == "group",
                     onClick = {
                         navController.navigate("group") {
-                          popUpTo(0) { inclusive = true }
+                            popUpTo(0) { inclusive = true }
                         }
                     }
                 )
@@ -106,16 +141,24 @@ fun BottomNavigationBar(navController: NavController) {
                 NavigationBarItem(
                     icon = {
                         Icon(
-                            painter = painterResource(id = R.drawable.ic_user),
+                            painter = painterResource(id = R.drawable.profile_icon),
                             contentDescription = "User Profile",
                             tint = if (currentRoute == "userprofile") Color.White else Color.White,
-                            modifier = Modifier.wrapContentSize(Alignment.Center)
+                            modifier = Modifier.wrapContentSize(Alignment.Center).size(25.dp)
                         )
+                    },
+                    label = {
+                        if (currentRoute == "userprofile") {
+                            Text(
+                                text = "Profile",
+                                color = Color.White
+                            )
+                        }
                     },
                     selected = currentRoute == "userprofile",
                     onClick = {
                         navController.navigate("userprofile") {
-                          popUpTo(0) { inclusive = true }
+                            popUpTo(0) { inclusive = true }
                         }
 
 
@@ -129,8 +172,3 @@ fun BottomNavigationBar(navController: NavController) {
 }
 
 
-@Preview(showBackground = true, showSystemUi = true)
-@Composable
-fun BottomNavigationBarPreview() {
-    BottomNavigationBar(navController = NavController(LocalContext.current))
-}

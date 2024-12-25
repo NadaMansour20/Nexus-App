@@ -23,6 +23,8 @@ import com.training.graduation.screens.ForgotPasswordScreen
 import com.training.graduation.screens.GroupListScreen
 import com.training.graduation.screens.HomeScreen
 import com.training.graduation.screens.LoginScreen
+import com.training.graduation.screens.Profile
+import com.training.graduation.screens.ScheduleMeeting
 import com.training.graduation.screens.SignupScreen
 import com.training.graduation.screens.SplashScreen
 import com.training.graduation.screens.StartMeetingScreen
@@ -82,6 +84,14 @@ fun AppNavigation(modifier: Modifier) {
 
         composable("home") { HomeScreen(navController = navController, modifier = Modifier, innerpadding = PaddingValues()) }
         composable("startMeeting") { StartMeetingScreen() }
+
+        composable("editProfile") { Profile() }
+
+        composable("schedule") { ScheduleMeeting() }
+
+
+
+
 
 
     }

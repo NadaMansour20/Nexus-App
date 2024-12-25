@@ -123,7 +123,7 @@ fun SignupScreen(modifier: Modifier, navController: NavController, innerpadding:
                 Text(text = stringResource(R.string.instructor), fontSize = 18.sp)
             }
 
-           Spacer(modifier = Modifier.height(10.dp))
+            Spacer(modifier = Modifier.height(10.dp))
             TextField(
                 label = { Text(stringResource(R.string.username)) },
                 value = "",
@@ -133,7 +133,7 @@ fun SignupScreen(modifier: Modifier, navController: NavController, innerpadding:
                 ),
                 leadingIcon = {
                     Icon(
-                        ImageVector.vectorResource(R.drawable.ic_user),
+                        ImageVector.vectorResource(R.drawable.profile_icon),
                         contentDescription = null
                     )
                 },
@@ -162,7 +162,7 @@ fun SignupScreen(modifier: Modifier, navController: NavController, innerpadding:
                     .fillMaxWidth()
                     .padding(start = 30.dp, end = 30.dp)
             )
-           Spacer(modifier = Modifier.height(10.dp))
+            Spacer(modifier = Modifier.height(10.dp))
             TextField(
                 label = { Text(stringResource(R.string.enter_your_password)) },
                 value = "",
@@ -188,7 +188,7 @@ fun SignupScreen(modifier: Modifier, navController: NavController, innerpadding:
                     .padding(start = 30.dp, end = 30.dp)
             )
 
-           Spacer(modifier = Modifier.height(20.dp))
+            Spacer(modifier = Modifier.height(20.dp))
 
             TextField(
                 label = { Text(stringResource(R.string.confirm_your_password)) },
@@ -215,7 +215,7 @@ fun SignupScreen(modifier: Modifier, navController: NavController, innerpadding:
                     .padding(start = 30.dp, end = 30.dp)
                     .height(35.dp)
             )
-         Spacer(modifier = Modifier.height(30.dp))
+            Spacer(modifier = Modifier.height(30.dp))
 
             Button(
                 onClick = {

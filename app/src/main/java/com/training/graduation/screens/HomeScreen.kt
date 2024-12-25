@@ -112,7 +112,10 @@ fun HomeScreen(modifier: Modifier,navController:NavController, innerpadding: Pad
                     .fillMaxWidth()
                     .padding(start = 20.dp, end = 20.dp)
             ) {
-                Card(onClick = {},
+                Card(onClick = {
+                    navController.navigate("schedule")
+
+                },
                     modifier = Modifier
                         .weight(1f)
                         .padding(end = 10.dp)

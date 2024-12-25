@@ -503,7 +503,7 @@ fun SignOut(modifier: Modifier, localDirection: LayoutDirection) {
 fun Photo(id:Int){
     val image = painterResource(id =id)
 
-    Image(
+    Icon(
         painter = image,
         contentDescription = "Circular Image",
         modifier = Modifier.size(24.dp)
