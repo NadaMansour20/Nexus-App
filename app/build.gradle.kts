@@ -51,6 +51,7 @@ dependencies {
     implementation(libs.androidx.material3)
     implementation(libs.androidx.navigation.runtime.ktx)
     implementation(libs.androidx.benchmark.macro)
+    implementation(libs.material)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -58,11 +59,17 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
-    implementation( "androidx.compose.animation:animation:1.5.1")
-    implementation ("androidx.navigation:navigation-compose:2.6.0")
+    implementation( libs.androidx.animation)
+//    implementation (libs.androidx.navigation.compose)
 
-    implementation("com.exyte:animated-navigation-bar:1.0.0")
-    implementation ("androidx.compose.material:material-icons-extended:1.7.0")
+//    implementation(libs.animated.navigation.bar)
+    implementation (libs.androidx.material.icons.extended)
+
+    implementation (libs.androidx.navigation.compose.v260)
+
+    implementation(libs.animated.navigation.bar)
+
+
 
 
 

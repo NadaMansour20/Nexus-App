@@ -160,7 +160,7 @@ fun EditPhoto(modifier: Modifier) {
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.Center,
         ) {
-            Photo(id= R.drawable.ic_addphoto)
+//            Photo(id= R.drawable.ic_addphoto)
 
             Spacer(modifier = Modifier.width(5.dp))
 

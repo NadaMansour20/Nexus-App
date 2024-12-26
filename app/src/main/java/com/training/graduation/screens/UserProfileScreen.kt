@@ -12,13 +12,16 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Email
 import androidx.compose.material3.AlertDialog
@@ -60,7 +63,12 @@ fun UserProfileScreen(navController: NavController){
 
     val layoutDirection = LocalLayoutDirection.current
 
-    Column {
+    val scrollState = rememberScrollState()
+    Column(
+        modifier = Modifier.fillMaxSize().verticalScroll(scrollState)
+
+    )
+        {
         Row (
             modifier = Modifier
                 .fillMaxWidth()
@@ -83,17 +91,17 @@ fun UserProfileScreen(navController: NavController){
 
         EditProfile(Modifier.padding( horizontal = 20.dp),navController)
 
-        AddAccount(Modifier.padding(vertical = 30.dp, horizontal = 20.dp),layoutDirection)
+        AddAccount(Modifier.padding(vertical = 20.dp, horizontal = 20.dp),layoutDirection)
 
-        ContactInfo(Modifier.padding(vertical = 25.dp, horizontal = 20.dp))
+        ContactInfo(Modifier.padding(vertical = 20.dp, horizontal = 20.dp))
 
         Info(Modifier.padding(horizontal = 40.dp))
 
-        Setting(Modifier.padding(vertical = 40.dp, horizontal = 20.dp),layoutDirection)
+        Setting(Modifier.padding(vertical = 20.dp, horizontal = 20.dp),layoutDirection)
 
         Notification(Modifier.padding(vertical = 10.dp, horizontal = 20.dp))
 
-        Privacy(Modifier.padding(vertical = 40.dp, horizontal = 20.dp))
+        Privacy(Modifier.padding(vertical = 20.dp, horizontal = 20.dp))
 
         SignOut(Modifier.padding( horizontal = 20.dp),layoutDirection)
 

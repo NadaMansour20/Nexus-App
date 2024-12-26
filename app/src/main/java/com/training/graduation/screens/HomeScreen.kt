@@ -47,6 +47,9 @@ import com.training.graduation.navigation.BottomNavigationBar
 
 @Composable
 fun HomeScreen(modifier: Modifier,navController:NavController, innerpadding: PaddingValues) {
+
+
+
     Box(modifier = modifier.padding(innerpadding).fillMaxSize(), contentAlignment = Alignment.Center) {
         Image(
             painter = painterResource(id = R.drawable.background),
@@ -83,7 +86,11 @@ fun HomeScreen(modifier: Modifier,navController:NavController, innerpadding: Pad
                     tint = Color.Black
                 )
             }
-            Card(onClick = {},modifier= Modifier
+            Card(onClick = {
+
+                navController.navigate("start_meeting")
+
+            },modifier= Modifier
                 .fillMaxWidth()
                 .padding(start = 20.dp, end = 20.dp)
                 .height(120.dp),
@@ -173,8 +180,7 @@ fun HomeScreen(modifier: Modifier,navController:NavController, innerpadding: Pad
             }
             }
 
-            Spacer(modifier = Modifier.height(70.dp))
-            BottomNavigationBar(navController = NavController(LocalContext.current))
+            BottomNavigationBar(navController = navController)
 
 
         }

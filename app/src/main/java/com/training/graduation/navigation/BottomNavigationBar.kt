@@ -34,6 +34,7 @@ import com.training.graduation.R
 @Composable
 fun BottomNavigationBarPreview() {
     BottomNavigationBar(navController = NavController(LocalContext.current))
+
 }
 
 
