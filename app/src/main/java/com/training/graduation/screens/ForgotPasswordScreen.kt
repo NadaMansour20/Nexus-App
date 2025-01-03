@@ -2,6 +2,7 @@ package com.training.graduation.screens
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -17,6 +18,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
@@ -30,8 +32,11 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -40,16 +45,10 @@ import com.training.graduation.R
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ForgotPasswordScreen(modifier: Modifier,navController: NavController, innerpadding: PaddingValues) {
-    Box(modifier = modifier.padding(innerpadding).fillMaxSize(), contentAlignment = Alignment.Center) {
-        Image(
-            painter = painterResource(id = R.drawable.background),
-            contentDescription = null,
-            modifier = Modifier.fillMaxSize(),
-            contentScale = ContentScale.FillBounds
-        )
-        val scrollState = rememberScrollState()
         Column(
-            modifier = Modifier.fillMaxSize().verticalScroll(scrollState).padding(16.dp),
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(16.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Spacer(modifier = Modifier.height(100.dp))
@@ -64,7 +63,7 @@ fun ForgotPasswordScreen(modifier: Modifier,navController: NavController, innerp
             )
             Spacer(modifier = Modifier.height(5.dp))
             Text(
-                text = "Password!",
+                text = "Password?",
                 color = Color(0xFF3533CD),
                 fontSize = 40.sp,
                 fontWeight = FontWeight.Bold,
@@ -73,7 +72,7 @@ fun ForgotPasswordScreen(modifier: Modifier,navController: NavController, innerp
                     .padding(start = 20.dp)
             )
             Spacer(modifier = Modifier.height(100.dp))
-            TextField(
+            OutlinedTextField(
                 label = { Text("Enter your email") },
                 value = "",
                 onValueChange = {},
@@ -87,7 +86,9 @@ fun ForgotPasswordScreen(modifier: Modifier,navController: NavController, innerp
                     )
                 },
                 shape = RoundedCornerShape(25.dp),
-                modifier = Modifier.fillMaxWidth().padding(start = 30.dp, end = 30.dp)
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(start = 30.dp, end = 30.dp)
             )
             Spacer(modifier = Modifier.height(80.dp))
             Button(
@@ -95,7 +96,7 @@ fun ForgotPasswordScreen(modifier: Modifier,navController: NavController, innerp
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(start = 30.dp, end = 30.dp)
-                    .height(50.dp)
+                    .height(55.dp)
                     .background(
                         brush = Brush.linearGradient(
                             colors = listOf(Color(0xFF000000), Color(0xFF3533CD)),
@@ -119,17 +120,31 @@ fun ForgotPasswordScreen(modifier: Modifier,navController: NavController, innerp
 
                 ) {
                 Text(
-                    text = "Change Password",
+                    text = stringResource(R.string.change_password),
                     color = Color.White,
 
                     fontSize = 15.sp
                 )
 
             }
+
+            Text(
+                stringResource(R.string.back_to_login),
+                style = TextStyle(fontSize = 20.sp),
+                textDecoration = TextDecoration.Underline ,
+
+                        modifier = Modifier
+                            .padding(top = 30.dp)
+                            .clickable(
+                                onClick = {
+                                    navController.navigate("loginscreen") {
+                                        popUpTo(0)
+                                    }
+                                }
+                            ))
         }
 
 
-    }
 
 
 }

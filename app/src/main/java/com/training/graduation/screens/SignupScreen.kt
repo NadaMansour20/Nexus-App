@@ -20,6 +20,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.RadioButton
 import androidx.compose.material3.RadioButtonDefaults
 import androidx.compose.material3.Text
@@ -42,32 +43,32 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.training.graduation.R
+
+
+@Preview(showBackground = true, showSystemUi = true)
+@Composable
+fun SignupScreenPreview(){
+    SignupScreen(modifier = Modifier, navController= NavController(LocalContext.current), innerpadding = PaddingValues())
+}
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SignupScreen(modifier: Modifier, navController: NavController, innerpadding: PaddingValues){
     var selectedRole by remember { mutableStateOf("User") }
-    Box (modifier = modifier
-        .padding(innerpadding)
-        .fillMaxSize(), contentAlignment = Alignment.Center){
-        Image(
-            painter = painterResource(id = R.drawable.background),
-            contentDescription = null,
-            modifier = Modifier.fillMaxSize(),
-            contentScale = ContentScale.FillBounds
-        )
-        val scrollState = rememberScrollState()
+
         Column(
-            modifier = Modifier.fillMaxSize().verticalScroll(scrollState).padding(16.dp),
+            modifier = Modifier.fillMaxSize().padding(16.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ){
             Spacer(modifier = Modifier.height(40.dp))
             Text(
-                text = stringResource(R.string.create_an),
+                text = stringResource(R.string.lets),
                 color = Color.Black,
                 fontSize = 40.sp,
                 modifier = Modifier
@@ -76,6 +77,24 @@ fun SignupScreen(modifier: Modifier, navController: NavController, innerpadding:
 
             )
             Spacer(modifier = Modifier.height(5.dp))
+            Text(
+                text = stringResource(R.string.create),
+                color = Color(0xFF3533CD),
+                fontSize = 40.sp,
+                fontWeight = FontWeight.Bold,
+                modifier = Modifier
+                    .align(Alignment.Start)
+                    .padding(start = 20.dp)
+            )
+            Text(
+                text = stringResource(R.string.your),
+                color = Color(0xFF3533CD),
+                fontSize = 40.sp,
+                fontWeight = FontWeight.Bold,
+                modifier = Modifier
+                    .align(Alignment.Start)
+                    .padding(start = 20.dp)
+            )
             Text(
                 text = stringResource(R.string.account),
                 color = Color(0xFF3533CD),
@@ -86,6 +105,7 @@ fun SignupScreen(modifier: Modifier, navController: NavController, innerpadding:
                     .padding(start = 20.dp)
             )
             Spacer(modifier = Modifier.height(30.dp))
+
             Text(
                 text = stringResource(R.string.select_your_role),
                 fontSize = 20.sp,
@@ -124,7 +144,7 @@ fun SignupScreen(modifier: Modifier, navController: NavController, innerpadding:
             }
 
             Spacer(modifier = Modifier.height(10.dp))
-            TextField(
+            OutlinedTextField(
                 label = { Text(stringResource(R.string.username)) },
                 value = "",
                 onValueChange = {},
@@ -133,7 +153,7 @@ fun SignupScreen(modifier: Modifier, navController: NavController, innerpadding:
                 ),
                 leadingIcon = {
                     Icon(
-                        ImageVector.vectorResource(R.drawable.profile_icon),
+                        ImageVector.vectorResource(R.drawable.ic_user),
                         contentDescription = null
                     )
                 },
@@ -144,7 +164,7 @@ fun SignupScreen(modifier: Modifier, navController: NavController, innerpadding:
 
             )
             Spacer(modifier = Modifier.height(10.dp))
-            TextField(
+            OutlinedTextField(
                 label = { Text(stringResource(R.string.enter_your_email)) },
                 value = "",
                 onValueChange = {},
@@ -163,9 +183,10 @@ fun SignupScreen(modifier: Modifier, navController: NavController, innerpadding:
                     .padding(start = 30.dp, end = 30.dp)
             )
             Spacer(modifier = Modifier.height(10.dp))
-            TextField(
+            OutlinedTextField(
                 label = { Text(stringResource(R.string.enter_your_password)) },
                 value = "",
+                visualTransformation = PasswordVisualTransformation(),
                 onValueChange = {},
                 colors = TextFieldDefaults.textFieldColors(
                     containerColor = Color.LightGray
@@ -190,7 +211,7 @@ fun SignupScreen(modifier: Modifier, navController: NavController, innerpadding:
 
             Spacer(modifier = Modifier.height(20.dp))
 
-            TextField(
+            OutlinedTextField(
                 label = { Text(stringResource(R.string.confirm_your_password)) },
                 value = "",
                 onValueChange = {},
@@ -213,9 +234,8 @@ fun SignupScreen(modifier: Modifier, navController: NavController, innerpadding:
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(start = 30.dp, end = 30.dp)
-                    .height(35.dp)
             )
-            Spacer(modifier = Modifier.height(30.dp))
+            Spacer(modifier = Modifier.height(50.dp))
 
             Button(
                 onClick = {
@@ -257,33 +277,7 @@ fun SignupScreen(modifier: Modifier, navController: NavController, innerpadding:
                 )
 
             }
-            //Spacer(modifier = Modifier.height(40.dp))
-            Text(
-                text = stringResource(R.string.already_have_an_account),
-                fontSize = 15.sp,
-                color = Color.Black,
-                modifier = Modifier.align(Alignment.CenterHorizontally)
-            )
-            Text(
-                text = stringResource(R.string.login),
-                color = Color(0xFF3533CD),
-                fontWeight = FontWeight.Bold,
-                modifier = Modifier.clickable {
-                    navController.navigate("loginscreen"){
-                        popUpTo("startscreen")
-                    }
-                }
-            )
 
-
-
-
-        }
 
     }
-}
-@Preview(showBackground = true, showSystemUi = true)
-@Composable
-fun SignupScreenPreview(){
-    SignupScreen(modifier = Modifier, navController= NavController(LocalContext.current), innerpadding = PaddingValues())
 }

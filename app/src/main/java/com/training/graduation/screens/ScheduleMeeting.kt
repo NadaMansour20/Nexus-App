@@ -1,7 +1,9 @@
 package com.training.graduation.screens
 
 
+import android.graphics.Color.alpha
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -12,12 +14,18 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.BasicText
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.ArrowForward
+
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -37,13 +45,18 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.training.graduation.R
+import java.time.LocalDate
+import java.time.YearMonth
+import java.util.Locale
 
 
 @Preview(showSystemUi = true)
@@ -90,22 +103,7 @@ fun CalendarScreen(onAddEventClick: () -> Unit) {
         ) {
             // You can add some header content here
         }
-
-        Card(
-            modifier = Modifier
-                .padding(20.dp)
-                .fillMaxHeight(0.42f),
-            elevation = CardDefaults.cardElevation(defaultElevation = 5.dp),
-            shape = RoundedCornerShape(
-                topStart = 40.dp,
-                topEnd = 40.dp,
-                bottomEnd = 40.dp,
-                bottomStart = 40.dp
-            ),
-            colors = CardDefaults.cardColors(Color.White)
-        ) {
-            //CalendarView()  // Add your calendar view here if needed
-        }
+            CalendarView()  // Add your calendar view here if needed
 
         // Today's Events
         Text(
@@ -130,8 +128,9 @@ fun CalendarScreen(onAddEventClick: () -> Unit) {
         ) {
             FloatingActionButton(
                 onClick = onAddEventClick,
-                containerColor = colorResource(R.color.orange),
-                contentColor = Color(0xFFFFFFFF)
+                containerColor = colorResource(R.color.orange).copy(alpha = 0.85f),
+                contentColor = Color(0xFFFFFFFF),
+                modifier = Modifier.padding(10.dp)
             ) {
                 Icon(Icons.Default.Add, contentDescription = "Add Event")
             }
@@ -170,5 +169,123 @@ fun MeetingCard(meetingName: String, description: String) {
         }
     }
 }
+
+@Composable
+fun CalendarView() {
+    var selectedDate by remember { mutableStateOf(LocalDate.now()) } // اليوم المحدد
+    var currentMonth by remember { mutableStateOf(YearMonth.now()) } // الشهر الحالي
+
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(16.dp),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        // الجزء العلوي (الشهر وأزرار التنقل)
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Icon(
+                painter = painterResource(id = R.drawable.ic_back),
+                contentDescription = "الشهر السابق",
+                modifier = Modifier.clickable {
+                    currentMonth = currentMonth.minusMonths(1) // الانتقال للشهر السابق
+                }
+            )
+            Text(
+                text = "${currentMonth.month.getDisplayName(java.time.format.TextStyle.FULL, Locale.getDefault())} ${currentMonth.year}",
+                style = MaterialTheme.typography.titleLarge, // عرض اسم الشهر والسنة
+                textAlign = TextAlign.Center,
+                color = Color.White
+            )
+            Icon(
+                painter = painterResource(id = R.drawable.ic_next),
+                contentDescription = "الشهر التالي",
+                modifier = Modifier.clickable {
+                    currentMonth = currentMonth.plusMonths(1) // الانتقال للشهر التالي
+                }
+            )
+        }
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        // أيام الأسبوع
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceEvenly
+        ) {
+            listOf(stringResource(R.string.Sun),
+                stringResource(R.string.Mon),
+                stringResource(R.string.Tue),
+                stringResource(R.string.Wed),
+                stringResource(R.string.Thu),
+                stringResource(R.string.Fri),
+                stringResource(R.string.Sat)
+            ).forEach { day ->
+//                Text(
+//                    text = (day),
+//                    style = TextStyle(color = Color.White),
+//                    style = MaterialTheme.typography.bodyMedium,
+//                    textAlign = TextAlign.Center,
+//                    modifier = Modifier.weight(1f)
+//                )
+            }
+        }
+
+        Spacer(modifier = Modifier.height(8.dp))
+
+        // عرض الأيام داخل شبكة
+        val daysInMonth = (1..currentMonth.lengthOfMonth()).toList()
+        val firstDayOfWeek = LocalDate.of(currentMonth.year, currentMonth.month, 1).dayOfWeek.value % 7
+
+        val daysGrid = mutableListOf<String>()
+        repeat(firstDayOfWeek) { daysGrid.add("") } // إضافة مسافات فارغة لأيام الأسبوع
+        daysGrid.addAll(daysInMonth.map { it.toString() }) // إضافة الأيام
+
+        Column {
+            daysGrid.chunked(7).forEach { week ->
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceEvenly
+                ) {
+                    week.forEach { day ->
+                        Box(
+                            modifier = Modifier
+                                .size(40.dp)
+                                .background(
+                                    color = if (day.isNotEmpty() && day.toInt() == selectedDate.dayOfMonth &&
+                                        currentMonth == YearMonth.of(
+                                            selectedDate.year,
+                                            selectedDate.month
+                                        )
+                                    ) Color.White.copy(alpha = 0.15f) else Color.Transparent, // تلوين اليوم المحدد
+                                    shape = CircleShape
+                                )
+                                .clickable(enabled = day.isNotEmpty()) {
+                                    selectedDate = LocalDate.of(
+                                        currentMonth.year,
+                                        currentMonth.month,
+                                        day.toInt()
+                                    )
+                                },
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Text(
+                                text = day,
+                                style = MaterialTheme.typography.bodyMedium.copy(
+                                    color = if (day.isNotEmpty()) Color.White else Color.Transparent
+                                ),
+                                textAlign = TextAlign.Center
+                            )
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
 
 

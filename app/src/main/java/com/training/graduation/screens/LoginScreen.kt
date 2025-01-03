@@ -17,8 +17,10 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Card
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldColors
@@ -38,6 +40,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -47,19 +50,9 @@ import com.training.graduation.R
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun LoginScreen(modifier: Modifier, navController: NavController, innerpadding: PaddingValues) {
-    Box(
-        modifier =Modifier.padding(innerpadding).fillMaxSize(),
-        contentAlignment = Alignment.Center
-    ) {
-        Image(
-            painter = painterResource(id = R.drawable.background),
-            contentDescription = null,
-            modifier = Modifier.fillMaxSize(),
-            contentScale = ContentScale.FillBounds
-        )
-        val scrollState = rememberScrollState()
+
         Column(
-            modifier = Modifier.fillMaxSize().verticalScroll(scrollState).padding(16.dp),
+            modifier = Modifier.fillMaxSize().padding(16.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Spacer(modifier = Modifier.height(50.dp))
@@ -83,7 +76,7 @@ fun LoginScreen(modifier: Modifier, navController: NavController, innerpadding: 
                     .padding(start = 20.dp)
             )
             Spacer(modifier = Modifier.height(100.dp))
-            TextField(
+            OutlinedTextField(
                 label = { Text(stringResource(R.string.enter_your_email)) },
                 value = "",
                 onValueChange = {},
@@ -102,9 +95,10 @@ fun LoginScreen(modifier: Modifier, navController: NavController, innerpadding: 
                     .padding(start = 30.dp, end = 30.dp)
             )
             Spacer(modifier = Modifier.height(20.dp))
-            TextField(
+            OutlinedTextField(
                 label = { Text(stringResource(R.string.enter_your_password)) },
                 value = "",
+                visualTransformation = PasswordVisualTransformation(),
                 onValueChange = {},
                 colors = TextFieldDefaults.textFieldColors(
                     containerColor = Color.LightGray
@@ -126,7 +120,9 @@ fun LoginScreen(modifier: Modifier, navController: NavController, innerpadding: 
                     .fillMaxWidth()
                     .padding(start = 30.dp, end = 30.dp)
             )
-           // Spacer(modifier = Modifier.height(60.dp))
+
+            Spacer(modifier = Modifier.height(50.dp))
+
             Button(
                 onClick = {
                     navController.navigate("homescreen") {
@@ -135,8 +131,8 @@ fun LoginScreen(modifier: Modifier, navController: NavController, innerpadding: 
                 },
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(50.dp)
-                    .height(35.dp)
+                    .padding(start = 30.dp, end = 30.dp)
+                    .height(40.dp)
                     .background(
                         brush = Brush.linearGradient(
                             colors = listOf(Color(0xFF000000), Color(0xFF3533CD)),
@@ -160,15 +156,17 @@ fun LoginScreen(modifier: Modifier, navController: NavController, innerpadding: 
 
                 ) {
                 Text(
-                    text = "LOGIN",
+                    text = "Login",
                     color = Color.White,
                     fontWeight = FontWeight.Bold,
-                    fontSize = 10.sp
+                    fontSize = 17.sp
                 )
             }
+            Spacer(modifier = Modifier.height(20.dp))
+
             Text(
                 text = stringResource(R.string.forgot_password),
-                fontSize = 10.sp,
+                fontSize = 15.sp,
                 color = Color.Black,
                 modifier = Modifier
                     .align(Alignment.End)
@@ -179,19 +177,20 @@ fun LoginScreen(modifier: Modifier, navController: NavController, innerpadding: 
                         }
                     }
             )
-            //Spacer(modifier = Modifier.height(40.dp))
+            Spacer(modifier = Modifier.height(40.dp))
+
             Text(
                 text = stringResource(R.string.don_t_have_an_account),
-                fontSize = 15.sp,
+                fontSize = 18.sp,
                 color = Color.Black,
-                modifier = Modifier.align(Alignment.CenterHorizontally)
+                modifier = Modifier.padding(top = 15.dp).align(Alignment.CenterHorizontally)
             )
             Text(
                 text = stringResource(R.string.sign_up_now),
                 color = Color(0xFF3533CD),
                 fontWeight = FontWeight.Bold,
-                fontSize = 10.sp,
-                modifier = Modifier.clickable {
+                fontSize = 15.sp,
+                modifier = Modifier.padding(top = 10.dp).clickable {
                     navController.navigate("signupscreen") {
                         popUpTo("startscreen")
                     }
@@ -201,8 +200,6 @@ fun LoginScreen(modifier: Modifier, navController: NavController, innerpadding: 
 
         }
 
-
-    }
 }
 
 @Preview(showBackground = true, showSystemUi = true)

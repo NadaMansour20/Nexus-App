@@ -56,9 +56,9 @@ fun StartScreen(modifier: Modifier, navController: NavController,innerpadding: P
             Spacer(modifier = Modifier.height(290.dp))
             Button(
                 onClick = {
-                    navController.navigate("loginscreen") {
-                        popUpTo("startscreen")
-                    }
+//                    navController.navigate("loginscreen") {
+//                        popUpTo("startscreen")
+//                    }
                 },
                 colors = ButtonDefaults.buttonColors(
                     containerColor = Color.White,

@@ -12,8 +12,10 @@
     <string name="enter_your_email">Enter your email</string>
     <string name="enter_your_password">Enter password</string>
     <string name="forgot_password">Forgot password?</string>
-    <string name="create_an">"Create an "</string>
-    <string name="account">Account!</string>
+    <string name="lets">"Let's"</string>
+    <string name="your">"Your"</string>
+    <string name="create">"Create"</string>
+    <string name="account">Account</string>
     <string name="select_your_role">Select your role:</string>
     <string name="user">User</string>
     <string name="instructor">Foundation</string>
@@ -57,4 +59,13 @@
     <string name="meeting_description">Meeting Description</string>
     <string name="description_is_required">Description is required</string>
     <string name="description">Description</string>
+    <string name="Sun">Sun</string>
+    <string name="Mon">Mon</string>
+    <string name="Tue">Tue</string>
+    <string name="Wed">Wed</string>
+    <string name="Thu">Thu</string>
+    <string name="Fri">Fri</string>
+    <string name="Sat">Sat</string>
+    <string name="back_to_login">Back to Login</string>
+    <string name="change_password">Change Password</string>
 </resources>

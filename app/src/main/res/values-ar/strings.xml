@@ -48,6 +48,9 @@
     <string name="Are_you_sure_you_want_to_sign_out">هل أنت متأكد أنك تريد تسجيل الخروج؟</string>
     <string name="Yes">نعم</string>
     <string name="No">لا</string>
+    <string name="create">""</string>
+    <string name="lets">""</string>
+    <string name="your">""</string>
     <string name="select_date">أختر التاريخ</string>
     <string name="meetings_scheduled">الاجتماعات المجدولة</string>
     <string name="meeting_title">عنوان الاجتماع</string>
@@ -58,5 +61,14 @@
     <string name="meeting_description">وصف الاجتماع</string>
     <string name="description_is_required">وصف الاجتماع مطلوب</string>
     <string name="description">الوصف</string>
+    <string name="Sun">Sun</string>
+    <string name="Mon">Mon</string>
+    <string name="Tue">Tue</string>
+    <string name="Wed">Wed</string>
+    <string name="Thu">Thu</string>
+    <string name="Fri">Fri</string>
+    <string name="Sat">Sat</string>
+    <string name="back_to_login">Back to Login</string>
+    <string name="change_password">Change Password</string>
 
 </resources>
