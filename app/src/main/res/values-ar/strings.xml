@@ -13,8 +13,7 @@
     <string name="enter_your_email">ادخل بريدك الالكتروني</string>
     <string name="enter_your_password">ادخل كلمة المرور</string>
     <string name="forgot_password">هل نسيت كلمة المرور؟</string>
-    <string name="create_an">"انشئ   "</string>
-    <string name="account">حساب الان!  </string>
+    <string name="account">قم بإنشاء حسابك</string>
     <string name="select_your_role">حدد منصبك:</string>
     <string name="user">مستخدم</string>
     <string name="instructor">مؤسسة</string>
@@ -70,5 +69,9 @@
     <string name="Sat">Sat</string>
     <string name="back_to_login">Back to Login</string>
     <string name="change_password">Change Password</string>
+    <string name="chat">محادثه</string>
+    <string name="home">الرئيسيه</string>
+    <string name="group">الجروبات</string>
+    <string name="profile">صفحه المستخدم</string>
 
 </resources>

@@ -63,7 +63,7 @@ fun SignupScreen(modifier: Modifier, navController: NavController, innerpadding:
     var selectedRole by remember { mutableStateOf("User") }
 
         Column(
-            modifier = Modifier.fillMaxSize().padding(16.dp),
+            modifier = Modifier.fillMaxSize(),
             horizontalAlignment = Alignment.CenterHorizontally
         ){
             Spacer(modifier = Modifier.height(40.dp))

@@ -68,4 +68,8 @@
     <string name="Sat">Sat</string>
     <string name="back_to_login">Back to Login</string>
     <string name="change_password">Change Password</string>
+    <string name="chat">Chat</string>
+    <string name="home">Home</string>
+    <string name="group">Group</string>
+    <string name="profile">Profile</string>
 </resources>

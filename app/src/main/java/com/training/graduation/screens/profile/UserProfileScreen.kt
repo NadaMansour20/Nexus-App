@@ -1,8 +1,6 @@
-package com.training.graduation.screens
+package com.training.graduation.screens.profile
 
-import android.app.Activity
-import android.content.Context
-import android.content.res.Configuration
+import android.content.SharedPreferences
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -52,27 +50,27 @@ import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import androidx.navigation.NavHostController
 import com.training.graduation.R
 import com.training.graduation.navigation.BottomNavigationBar
+import com.training.graduation.screens.sharedprefrence.PreferenceManager
+import com.training.graduation.screens.sharedprefrence.UpdateLocale
 import java.util.Locale
 
 @Composable
-fun UserProfileScreen(navController: NavController){
+fun UserProfileScreen(navController: NavController,preferenceManager: PreferenceManager){
     BottomNavigationBar(navController = navController)
 
     val layoutDirection = LocalLayoutDirection.current
 
-    val scrollState = rememberScrollState()
     Column(
-        modifier = Modifier.fillMaxSize().verticalScroll(scrollState)
+        modifier = Modifier.fillMaxSize()
 
     )
         {
         Row (
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(30.dp)
+                .padding(start = 20.dp, top = 50.dp, bottom = 10.dp)
             ,
             verticalAlignment = Alignment.CenterVertically
 
@@ -89,21 +87,21 @@ fun UserProfileScreen(navController: NavController){
             )
         }
 
-        EditProfile(Modifier.padding( horizontal = 20.dp),navController)
+        EditProfile(Modifier.padding( start = 20.dp),navController)
 
-        AddAccount(Modifier.padding(vertical = 20.dp, horizontal = 20.dp),layoutDirection)
+        AddAccount(Modifier.padding(top = 20.dp, start = 20.dp),layoutDirection)
 
-        ContactInfo(Modifier.padding(vertical = 20.dp, horizontal = 20.dp))
+        ContactInfo(Modifier.padding(top = 30.dp, start = 20.dp))
 
-        Info(Modifier.padding(horizontal = 40.dp))
+        Info(Modifier.padding(start =40.dp,top = 20.dp))
 
-        Setting(Modifier.padding(vertical = 20.dp, horizontal = 20.dp),layoutDirection)
+        Setting(Modifier.padding(top = 30.dp, start= 20.dp),layoutDirection,preferenceManager)
 
-        Notification(Modifier.padding(vertical = 10.dp, horizontal = 20.dp))
+        Notification(Modifier.padding(start = 20.dp,top= 30.dp))
 
-        Privacy(Modifier.padding(vertical = 20.dp, horizontal = 20.dp))
+        Privacy(Modifier.padding(top = 30.dp, start = 20.dp))
 
-        SignOut(Modifier.padding( horizontal = 20.dp),layoutDirection)
+        SignOut(Modifier.padding( start = 20.dp,top=30.dp),layoutDirection)
 
     }
 
@@ -206,7 +204,7 @@ fun Info(modifier: Modifier = Modifier){
 
 
 @Composable
-fun Setting(modifier: Modifier, localDirection: LayoutDirection){
+fun Setting(modifier: Modifier, localDirection: LayoutDirection,preferenceManager: PreferenceManager){
 
     val context = LocalContext.current
 
@@ -217,7 +215,8 @@ fun Setting(modifier: Modifier, localDirection: LayoutDirection){
 
         var showDialog by remember { mutableStateOf(false) }
         var selectedTheme by remember { mutableStateOf("Light") }
-        var selectedLanguage by remember { mutableStateOf(Locale.getDefault().language) }
+//        var selectedLanguage by remember { mutableStateOf(Locale.getDefault().language) }
+        var selectedLanguage by remember { mutableStateOf(preferenceManager.getLanguage()) }
 
 
         Column(
@@ -272,6 +271,7 @@ fun Setting(modifier: Modifier, localDirection: LayoutDirection){
                                     selected = selectedLanguage =="en",
                                     onClick = { selectedLanguage ="en"
                                         UpdateLocale(context,"en")
+                                        preferenceManager.saveLanguage("en")
 
 
                                     },
@@ -285,6 +285,8 @@ fun Setting(modifier: Modifier, localDirection: LayoutDirection){
                                     selected = selectedLanguage =="ar",
                                     onClick = { selectedLanguage ="ar"
                                         UpdateLocale(context,"ar")
+                                        preferenceManager.saveLanguage("ar")
+
                                     },
                                     colors = RadioButtonDefaults.colors(
                                         selectedColor = colorResource(R.color.basic_color),
@@ -519,23 +521,11 @@ fun Photo(id:Int){
     )
 }
 
-fun UpdateLocale(context: Context, languageCode: String) {
-    val locale = Locale(languageCode)
-    Locale.setDefault(locale)
-    val config = Configuration(context.resources.configuration)
-    config.setLocale(locale)
-    context.resources.updateConfiguration(config, context.resources.displayMetrics)
-
-    val activity = context as? Activity
-    activity?.recreate()
-
-}
-
 
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 fun UserProfileScreenPreview() {
-    UserProfileScreen(navController = NavController(LocalContext.current))
+    UserProfileScreen(navController = NavController(LocalContext.current), preferenceManager=PreferenceManager(LocalContext.current) )
 
 
 }

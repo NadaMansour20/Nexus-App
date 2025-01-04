@@ -22,6 +22,7 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
@@ -72,13 +73,15 @@ fun BottomNavigationBar(navController: NavController) {
                             painter = painterResource(id = R.drawable.home_icon),
                             contentDescription = "Home",
                             tint = if (currentRoute == "homescreen") Color.White else Color.White,
-                            modifier = Modifier.wrapContentSize(Alignment.Center).size(25.dp)
+                            modifier = Modifier
+                                .wrapContentSize(Alignment.Center)
+                                .size(25.dp)
                         )
                     },
                     label = {
                         if (currentRoute == "homescreen") {
                             Text(
-                                text = "Home",
+                                text = stringResource(R.string.home),
                                 color = Color.White
                             )
                         }
@@ -96,13 +99,15 @@ fun BottomNavigationBar(navController: NavController) {
                             painter = painterResource(id = R.drawable.message_icon),
                             contentDescription = "Chat",
                             tint = if (currentRoute == "chat") Color.White else Color.White,
-                            modifier = Modifier.wrapContentSize(Alignment.Center).size(25.dp)
+                            modifier = Modifier
+                                .wrapContentSize(Alignment.Center)
+                                .size(25.dp)
                         )
                     },
                     label = {
                         if (currentRoute == "chat") {
                             Text(
-                                text = "Chat",
+                                text = stringResource(R.string.chat),
                                 color = Color.White
                             )
                         }
@@ -120,13 +125,15 @@ fun BottomNavigationBar(navController: NavController) {
                             painter = painterResource(id = R.drawable.group_icon),
                             contentDescription = "Group",
                             tint = if (currentRoute == "group") Color.White else Color.White,
-                            modifier = Modifier.wrapContentSize(Alignment.Center).size(25.dp)
+                            modifier = Modifier
+                                .wrapContentSize(Alignment.Center)
+                                .size(25.dp)
                         )
                     },
                     label = {
                         if (currentRoute == "group") {
                             Text(
-                                text = "Group",
+                                text = stringResource(R.string.group),
                                 color = Color.White
                             )
                         }
@@ -145,13 +152,15 @@ fun BottomNavigationBar(navController: NavController) {
                             painter = painterResource(id = R.drawable.profile_icon),
                             contentDescription = "User Profile",
                             tint = if (currentRoute == "userprofile") Color.White else Color.White,
-                            modifier = Modifier.wrapContentSize(Alignment.Center).size(25.dp)
+                            modifier = Modifier
+                                .wrapContentSize(Alignment.Center)
+                                .size(25.dp)
                         )
                     },
                     label = {
                         if (currentRoute == "userprofile") {
                             Text(
-                                text = "Profile",
+                                text = stringResource(R.string.profile),
                                 color = Color.White
                             )
                         }
