@@ -20,6 +20,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 //import com.squareup.wire.internal.Serializable
 import com.training.graduation.navigation.BottomNavigationBar
+import com.training.graduation.onboarding.OnboardingScreen
 import com.training.graduation.screens.ChatListScreen
 import com.training.graduation.screens.ForgotPasswordScreen
 import com.training.graduation.screens.GroupListScreen
@@ -30,9 +31,9 @@ import com.training.graduation.screens.ScheduleMeeting
 import com.training.graduation.screens.SignupScreen
 import com.training.graduation.screens.SplashScreen
 import com.training.graduation.screens.StartMeeting
-import com.training.graduation.screens.StartScreen
 import com.training.graduation.screens.UserProfileScreen
 import com.training.graduation.ui.theme.GraduationTheme
+//import com.training.graduation.screens.StartScreen
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -52,12 +53,12 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun AppNavigation(modifier: Modifier) {
     val navController = rememberNavController()
-    NavHost(navController = navController, startDestination = "splashscreen") {
+    NavHost(navController = navController, startDestination = "Onboarding") {
         composable(route = "splashscreen") {
             SplashScreen(modifier, navController, innerpadding = PaddingValues())
         }
-        composable(route = "startscreen") {
-            StartScreen(modifier, navController, innerpadding = PaddingValues())
+        composable(route = "Onboarding") {
+            OnboardingScreen (modifier, navController, innerpadding = PaddingValues())
         }
         composable(route = "loginscreen") {
             LoginScreen(modifier, navController, innerpadding = PaddingValues())

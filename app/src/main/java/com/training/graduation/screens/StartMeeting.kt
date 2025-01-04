@@ -1,6 +1,5 @@
 package com.training.graduation.screens
 
-
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -10,26 +9,32 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
 @Composable
 fun StartMeeting() {
-    var showDialog by remember { mutableStateOf(false) }
+    // Set showDialog to true by default to display the dialog immediately
+    var showDialog by remember { mutableStateOf(true) }
 
     // Main content of the StartMeeting screen
     Box(modifier = Modifier.fillMaxSize()) {
-        Button(
-            onClick = { showDialog = true },
-            modifier = Modifier.align(Alignment.Center)
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(16.dp),
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Text(text = "Open Settings", fontSize = 18.sp)
-        }
+            // Your main content goes here
+            Text("Welcome to the meeting", fontSize = 24.sp)
 
-        // Show the dialog on the same page
-        if (showDialog) {
-            QuestionsDialog(onDismissRequest = { showDialog = false })
+            // Show the dialog when showDialog is true
+            if (showDialog) {
+                QuestionsDialog(onDismissRequest = { showDialog = false })
+            }
         }
     }
 }
@@ -124,3 +129,5 @@ fun SwitchRow(
 fun StartMeetingPreview() {
     StartMeeting()
 }
+
+

@@ -47,6 +47,7 @@ import com.training.graduation.navigation.BottomNavigationBar
 
 @Composable
 fun HomeScreen(modifier: Modifier,navController:NavController, innerpadding: PaddingValues) {
+    var showDialog by remember { mutableStateOf(false) } // State to control dialog visibility
 
 
 
@@ -108,6 +109,9 @@ fun HomeScreen(modifier: Modifier,navController:NavController, innerpadding: Pad
                             tint = Color.Black
                         )
                         Text(stringResource(R.string.start_meeting), fontWeight = FontWeight.Bold)
+                        if (showDialog) {
+                            QuestionsDialog(onDismissRequest = { showDialog = false })
+                        }
                     }
 
                 }
