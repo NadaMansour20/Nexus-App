@@ -72,4 +72,12 @@
     <string name="home">Home</string>
     <string name="group">Group</string>
     <string name="profile">Profile</string>
+    <string name="create_your_own_group">Create your own group</string>
+    <string name="you_don_t_have_any_notifications">You don\'t have any notifications</string>
+    <string name="edit_your_profile">Edit your profile</string>
+    <string name="notifications">Notifications</string>
+    <string name="create_new_group">Create New Group</string>
+    <string name="schedule_meetings">Schedule your Meetings</string>
+    <string name="select_time">select_time</string>
+    <string name="language">Language</string>
 </resources>

@@ -60,14 +60,30 @@ dependencies {
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
     implementation( libs.androidx.animation)
-//    implementation (libs.androidx.navigation.compose)
 
-//    implementation(libs.animated.navigation.bar)
     implementation (libs.androidx.material.icons.extended)
 
     implementation (libs.androidx.navigation.compose.v260)
 
     implementation(libs.animated.navigation.bar)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

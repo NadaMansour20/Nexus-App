@@ -21,11 +21,13 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.ArrowBack
 
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -37,6 +39,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -46,32 +49,69 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.training.graduation.R
 import java.time.LocalDate
 import java.time.YearMonth
 import java.util.Locale
 
 
-@Preview(showSystemUi = true)
+
 @Composable
-fun ScheduleMeeting() {
+@Preview(showSystemUi = true)
+
+fun SchedulePreview(){
+    val navController = NavController(LocalContext.current)
+    ScheduleMeeting(navController)
+}
+
+
+@Composable
+fun ScheduleMeeting(navController:NavController) {
     var isScheduleVisible by remember { mutableStateOf(false) }
 
     Box(modifier = Modifier.fillMaxSize()) {
-        CalendarScreen(onAddEventClick = { isScheduleVisible = true })
 
-        if (isScheduleVisible) {
-            Box(
+        Column( modifier = Modifier.padding(top = 30.dp, start = 10.dp)) {
+
+            Row(
                 modifier = Modifier
-                    .fillMaxSize()
-                    .background(Color.Black.copy(alpha = 0.5f))
-                    .padding(16.dp),
-                contentAlignment = Alignment.Center
+                    .fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically
             ) {
-                Schedule_Card(onClose = { isScheduleVisible = false })
+                IconButton(
+                    onClick = {
+                        navController.navigateUp()
+                    }
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.ArrowBack,
+                        contentDescription = "Back",
+                        modifier = Modifier.padding(end = 8.dp)
+                    )
+
+                }
+                Text(
+                    stringResource(R.string.schedule_meetings),
+                    style = TextStyle(fontWeight = FontWeight.Bold, fontSize = 20.sp)
+                )
             }
         }
-    }
+
+        CalendarScreen(onAddEventClick = { isScheduleVisible = true })
+
+            if (isScheduleVisible) {
+                Box(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .background(Color.Black.copy(alpha = 0.5f))
+                        .padding(16.dp),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Schedule_Card(onClose = { isScheduleVisible = false })
+                }
+            }
+        }
 }
 
 @Composable
@@ -96,6 +136,7 @@ fun CalendarScreen(onAddEventClick: () -> Unit) {
         ) {
             // You can add some header content here
         }
+        Spacer(modifier = Modifier.padding(30.dp))
             CalendarView()  // Add your calendar view here if needed
 
         // Today's Events
@@ -183,6 +224,7 @@ fun CalendarView() {
             Icon(
                 painter = painterResource(id = R.drawable.ic_back),
                 contentDescription = "الشهر السابق",
+                tint = Color.White,
                 modifier = Modifier.clickable {
                     currentMonth = currentMonth.minusMonths(1) // الانتقال للشهر السابق
                 }
@@ -196,6 +238,7 @@ fun CalendarView() {
             Icon(
                 painter = painterResource(id = R.drawable.ic_next),
                 contentDescription = "الشهر التالي",
+                tint = Color.White,
                 modifier = Modifier.clickable {
                     currentMonth = currentMonth.plusMonths(1) // الانتقال للشهر التالي
                 }

@@ -80,9 +80,9 @@ fun LoginScreen(modifier: Modifier, navController: NavController, innerpadding: 
                 label = { Text(stringResource(R.string.enter_your_email)) },
                 value = "",
                 onValueChange = {},
-                colors = TextFieldDefaults.textFieldColors(
-                    containerColor = Color.LightGray
-                ),
+//                colors = TextFieldDefaults.textFieldColors(
+//                    containerColor = Color.LightGray
+//                ),
                 leadingIcon = {
                     Icon(
                         ImageVector.vectorResource(R.drawable.ic_email),
@@ -100,9 +100,9 @@ fun LoginScreen(modifier: Modifier, navController: NavController, innerpadding: 
                 value = "",
                 visualTransformation = PasswordVisualTransformation(),
                 onValueChange = {},
-                colors = TextFieldDefaults.textFieldColors(
-                    containerColor = Color.LightGray
-                ),
+//                colors = TextFieldDefaults.textFieldColors(
+//                    containerColor = Color.LightGray
+//                ),
                 leadingIcon = {
                     Icon(
                         ImageVector.vectorResource(R.drawable.ic_lock),

@@ -16,13 +16,14 @@ import androidx.navigation.compose.rememberNavController
 import com.training.graduation.onboarding.OnboardingScreen
 import com.training.graduation.screens.ChatListScreen
 import com.training.graduation.screens.ForgotPasswordScreen
-import com.training.graduation.screens.GroupListScreen
+import com.training.graduation.screens.group.GroupListScreen
 import com.training.graduation.screens.HomeScreen
 import com.training.graduation.screens.LoginScreen
 import com.training.graduation.screens.schedule.ScheduleMeeting
 import com.training.graduation.screens.SignupScreen
 import com.training.graduation.screens.SplashScreen
-import com.training.graduation.screens.StartMeeting
+import com.training.graduation.screens.notification.NotificationScreen
+import com.training.graduation.screens.startmeeting.StartMeeting
 import com.training.graduation.screens.profile.Profile
 import com.training.graduation.screens.profile.UserProfileScreen
 import com.training.graduation.screens.sharedprefrence.PreferenceManager
@@ -84,13 +85,16 @@ fun AppNavigation(modifier: Modifier,preferenceManager:PreferenceManager) {
             GroupListScreen(navController)
         }
         composable(route = "schedule") {
-            ScheduleMeeting()
+            ScheduleMeeting(navController)
         }
         composable(route = "start_meeting") {
             StartMeeting()
         }
         composable(route="editProfile"){
-            Profile()
+            Profile(navController)
+        }
+        composable(route="notification_screen"){
+            NotificationScreen( navController)
         }
 
     }

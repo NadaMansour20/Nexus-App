@@ -1,15 +1,22 @@
 package com.training.graduation.screens
 
+import android.content.Intent
+import android.net.Uri
+import android.widget.Toast
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.ClickableText
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material3.Card
@@ -26,7 +33,11 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -136,3 +147,87 @@ fun Menu() {
         }
     }
 }
+
+//
+//if (showRecordings) {
+//    val context = LocalContext.current
+//    Box(
+//        modifier = Modifier
+//            .fillMaxSize()
+//            .background(Color.Transparent)
+//    ) {
+//        Card(
+//            modifier = Modifier
+//                .fillMaxWidth()
+//                .align(Alignment.BottomCenter)
+//                .padding(16.dp)
+//                .background(Color.White)
+//
+//        ) {
+//            LazyColumn(
+//                modifier = Modifier
+//                    .fillMaxWidth()
+//                    .padding(16.dp)
+//            ) {
+//                itemsIndexed(recordingsList) { index, recording ->
+//                    Row(
+//                        modifier = Modifier
+//                            .fillMaxWidth()
+//                            .padding(8.dp)
+//                    ) {
+////                                    Text(
+////                                        text = recording.filename,
+////                                        modifier = Modifier.weight(1f)
+////                                    )
+//                        Text(
+//                            text = recording.startTime.toString(),
+//                            modifier = Modifier.weight(1f),
+//                            textAlign = TextAlign.End
+//                        )
+//                        Text(
+//                            text = recording.endTime.toString(),
+//                            modifier = Modifier.weight(1f),
+//                            textAlign = TextAlign.End
+//                        )
+//                        ClickableText(
+//                            text = buildAnnotatedString {
+//                                append(recording.filename)
+//                            },
+//                            onClick = { offset ->
+//                                // عند الضغط على النص، قم بفتح الرابط أو ما ترغب به
+//                                val url = recording.url// أو يمكنك استخدام رابط التسجيل مثل recording.url
+//                                val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+//                                try {
+//                                    context.startActivity(intent)
+//                                } catch (e: Exception) {
+//                                    Toast.makeText(context, "No application to handle this action", Toast.LENGTH_SHORT).show()
+//                                }
+//                            },
+//                            modifier = Modifier.weight(1f)
+//                        )
+////                                    IconButton(onClick = {
+////                                        lifecycleScope.launch {
+////                                            call.deleteRecording(recordingId = recording.id) // Assuming CallRecording has an id property
+////                                                .onSuccess {
+////                                                    // Remove the recording from the list
+////                                                    recordingsList.remove(recording)
+////                                                }
+////                                                .onError { error ->
+////                                                    Toast.makeText(context, "Error deleting recording: ${error.message}", Toast.LENGTH_SHORT).show()
+////                                                }
+////                                        }
+////                                    }) {
+////                                        Icon(imageVector = Icons.Default.Delete, contentDescription = "Delete Recording")
+////                                    }
+//
+//                    }
+//                }
+//            }
+//        }
+//    }
+//}
+//
+//
+//}
+//}
+//}
