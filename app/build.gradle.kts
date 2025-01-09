@@ -48,7 +48,7 @@ dependencies {
     implementation(libs.androidx.ui)
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
-    implementation(libs.androidx.material3)
+//    implementation(libs.androidx.material3)
     implementation(libs.androidx.navigation.runtime.ktx)
     implementation(libs.androidx.benchmark.macro)
     implementation(libs.material)
@@ -69,6 +69,11 @@ dependencies {
 
     implementation(libs.coil.compose)
     implementation(libs.coil)
+
+    implementation("io.getstream:stream-video-android-ui-compose:1.2.0")
+    implementation("androidx.compose.material3:material3:1.3.1")
+    implementation("androidx.compose.material3:material3-window-size-class:1.3.1")
+    implementation("androidx.compose.material3:material3-adaptive-navigation-suite:1.4.0-alpha05")
 
     
 

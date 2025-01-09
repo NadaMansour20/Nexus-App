@@ -103,12 +103,20 @@ fun ChatScreen(modifier: Modifier) {
                         .padding(end = 8.dp),
                     placeholder = { Text("Type a message...") },
                     shape = RoundedCornerShape(25.dp),
-                    colors = TextFieldDefaults.textFieldColors(
-                        containerColor = Color.White,
+                    colors = TextFieldDefaults.colors(
+                        focusedContainerColor = Color.Transparent,
+                        unfocusedContainerColor = Color.Transparent,
+                        disabledContainerColor = Color.White,
+                        errorContainerColor = Color.White,
                         focusedIndicatorColor = Color.Transparent,
                         unfocusedIndicatorColor = Color.Transparent,
                         cursorColor = Color.Black,
                     )
+//                        containerColor = Color.White,
+//                        focusedIndicatorColor = Color.Transparent,
+//                        unfocusedIndicatorColor = Color.Transparent,
+//                        cursorColor = Color.Black,
+//                    )
                 )
                 IconButton(onClick = {
                     if (messageText.isNotBlank()) {

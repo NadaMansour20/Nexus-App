@@ -110,10 +110,15 @@ fun Profile(navController: NavController){
                     value = "",
                     onValueChange = {},
                     shape = RoundedCornerShape(16.dp),
-                    colors = TextFieldDefaults.outlinedTextFieldColors(
-                        focusedBorderColor = MaterialTheme.colorScheme.primary,
-                        unfocusedBorderColor = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.5f)
+                    colors = TextFieldDefaults.colors(
+
+                        focusedIndicatorColor = colorResource(R.color.purple_200),
+                        unfocusedIndicatorColor = Color.Gray,
+
                     ),
+//                        focusedBorderColor = MaterialTheme.colorScheme.primary,
+//                        unfocusedBorderColor = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.5f)
+//                    ),
                     label = { Text(stringResource(R.string.username)) },
                     modifier = Modifier
                         .fillMaxWidth()
@@ -125,10 +130,16 @@ fun Profile(navController: NavController){
                     value = "",
                     onValueChange = {},
                     shape = RoundedCornerShape(16.dp),
-                    colors = TextFieldDefaults.outlinedTextFieldColors(
-                        focusedBorderColor = MaterialTheme.colorScheme.primary,
-                        unfocusedBorderColor = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.5f)
-                    ),
+                    colors = TextFieldDefaults.colors(
+
+                        focusedIndicatorColor = colorResource(R.color.purple_200),
+                        unfocusedIndicatorColor = Color.Gray,
+
+                        ),
+//                    colors = TextFieldDefaults.outlinedTextFieldColors(
+//                        focusedBorderColor = MaterialTheme.colorScheme.primary,
+//                        unfocusedBorderColor = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.5f)
+//                    ),
                     label = { Text(stringResource(R.string.Email)) },
                     modifier = Modifier
                         .fillMaxWidth()
@@ -139,10 +150,16 @@ fun Profile(navController: NavController){
                     value = "",
                     onValueChange = {},
                     shape = RoundedCornerShape(16.dp),
-                    colors = TextFieldDefaults.outlinedTextFieldColors(
-                        focusedBorderColor = MaterialTheme.colorScheme.primary,
-                        unfocusedBorderColor = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.5f)
-                    ),
+                    colors = TextFieldDefaults.colors(
+
+                        focusedIndicatorColor = colorResource(R.color.purple_200),
+                        unfocusedIndicatorColor = Color.Gray,
+
+                        ),
+//                    colors = TextFieldDefaults.outlinedTextFieldColors(
+//                        focusedBorderColor = MaterialTheme.colorScheme.primary,
+//                        unfocusedBorderColor = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.5f)
+//                    ),
                     label = { Text(stringResource(R.string.Password)) },
                     modifier = Modifier
                         .fillMaxWidth()

@@ -76,9 +76,12 @@ fun ForgotPasswordScreen(modifier: Modifier,navController: NavController, innerp
                 label = { Text("Enter your email") },
                 value = "",
                 onValueChange = {},
-                colors = TextFieldDefaults.textFieldColors(
-                    containerColor = Color.LightGray
+                colors = TextFieldDefaults.colors(
+                    cursorColor = Color.LightGray
                 ),
+//                    containerColor = Color.LightGray
+//                ),
+
                 leadingIcon = {
                     Icon(
                         ImageVector.vectorResource(R.drawable.ic_email),

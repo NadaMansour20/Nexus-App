@@ -251,12 +251,20 @@ fun SearchBar(
                 tint = Color.Gray
             )
         },
-        colors = TextFieldDefaults.outlinedTextFieldColors(
-            containerColor = Color.White,
-            focusedBorderColor = colorResource(R.color.basic_color),
-            unfocusedBorderColor = Color.Gray,
+        colors = TextFieldDefaults.colors(
+            focusedContainerColor = Color.White,
+            unfocusedContainerColor = Color.White,
+            disabledContainerColor = Color.White,
+            errorContainerColor = Color.White,
+            focusedIndicatorColor = colorResource(R.color.basic_color),
+            unfocusedIndicatorColor = Color.Gray,
             cursorColor = Color.Black
         ),
+//            containerColor = Color.White,
+//            focusedBorderColor = colorResource(R.color.basic_color),
+//            unfocusedBorderColor = Color.Gray,
+//            cursorColor = Color.Black
+//        ),
         modifier = modifier
             .fillMaxWidth()
             .padding(horizontal = 16.dp)
