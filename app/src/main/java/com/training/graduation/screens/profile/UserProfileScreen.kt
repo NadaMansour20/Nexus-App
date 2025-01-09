@@ -39,6 +39,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.res.colorResource
@@ -122,6 +123,7 @@ fun ProfileImage1() {
 
     Image(
         painter = image,
+        contentScale = ContentScale.Crop,
         contentDescription = "Circular Image",
         modifier = Modifier
             .size(70.dp)

@@ -77,7 +77,7 @@ fun No_Notification(){
 
 
 
-        val image = painterResource(id = R.drawable.notifications_)
+        val image = painterResource(id = R.drawable.notification_)
 
         Image(
             painter = image,

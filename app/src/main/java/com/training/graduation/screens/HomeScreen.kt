@@ -51,6 +51,7 @@ import com.training.graduation.R
 import com.training.graduation.navigation.BottomNavigationBar
 import com.training.graduation.screens.profile.Photo
 import com.training.graduation.screens.startmeeting.QuestionsDialog
+import com.training.graduation.screens.startmeeting.StartVideo
 
 
 @Composable
@@ -87,11 +88,10 @@ fun HomeScreen(modifier: Modifier,navController:NavController, innerpadding: Pad
                         navController.navigate("notification_screen")
                     }
                 ) {
-                    Icon(
+                    Image(
                         painter = icon,
                         contentDescription = "Circular Image",
                         modifier = Modifier.size(24.dp),
-                        tint = colorResource(R.color.yellow)
                     )
                 }
                 Spacer(modifier = Modifier.height(100.dp))
@@ -113,9 +113,9 @@ fun HomeScreen(modifier: Modifier,navController:NavController, innerpadding: Pad
             }
             Card(onClick = {
 
-                navController.navigate("start_meeting")
-//                val intent = Intent(context, StartVideo::class.java)
-//                context.startActivity(intent)
+                //navController.navigate("start_meeting")
+                val intent = Intent(context, StartVideo::class.java)
+                context.startActivity(intent)
 
             },modifier= Modifier
                 .fillMaxWidth()
