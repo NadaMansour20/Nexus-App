@@ -77,17 +77,14 @@ fun No_Notification(){
 
 
 
-        val image = painterResource(id = R.drawable.no_notificatio)
+        val image = painterResource(id = R.drawable.notification_)
 
         Image(
             painter = image,
             contentDescription = "Circular Image",
-            modifier = Modifier.size(150.dp)
+            modifier = Modifier.size(300.dp)
 
         )
-
-        Spacer(modifier = Modifier.size(30.dp))
-
         Text(stringResource(R.string.you_don_t_have_any_notifications)
             , style = TextStyle(fontWeight=FontWeight.Bold, fontSize = 20.sp)
         )

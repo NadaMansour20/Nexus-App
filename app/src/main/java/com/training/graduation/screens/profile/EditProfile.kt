@@ -1,8 +1,12 @@
 package com.training.graduation.screens.profile
 
+import android.net.Uri
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -33,6 +37,8 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -50,6 +56,8 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.zIndex
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import coil.compose.AsyncImagePainter
+import coil.compose.rememberAsyncImagePainter
 import com.training.graduation.R
 import com.training.graduation.screens.notification.NotificationScreen
 
@@ -57,6 +65,22 @@ import com.training.graduation.screens.notification.NotificationScreen
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun Profile(navController: NavController){
+
+    //add image from gallery
+    val imageUri = rememberSaveable { mutableStateOf("") }
+
+    val launcher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.GetContent()
+    ) { uri: Uri? ->
+        uri?.let {
+            imageUri.value = it.toString()
+        }
+    }
+
+    val painter = rememberAsyncImagePainter(
+        imageUri.value.ifEmpty { R.drawable.image11 }
+    )
+
 
     Box(
         modifier = Modifier
@@ -79,8 +103,8 @@ fun Profile(navController: NavController){
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Spacer(modifier = Modifier.height(80.dp))
-                EditPhoto(Modifier.padding(bottom = 20.dp))
+                Spacer(modifier = Modifier.height(60.dp))
+                EditPhoto(modifier =Modifier.padding(bottom = 20.dp),launcher)
 
                 OutlinedTextField(
                     value = "",
@@ -173,7 +197,7 @@ fun Profile(navController: NavController){
                 .offset(y = 100.dp)
                 .zIndex(1f) // للتأكد من أنها تظهر فوق الـ Card
         ) {
-            ProfileImage(Modifier.size(120.dp))
+            ProfileImage(painter)
         }
     }
 
@@ -181,13 +205,12 @@ fun Profile(navController: NavController){
 }
 
 @Composable
-fun ProfileImage(modifier: Modifier) {
-    val image = painterResource(id = R.drawable.image11)
+fun ProfileImage(painter: AsyncImagePainter) {
 
     Image(
-        painter = image,
+        painter = painter,
         contentDescription = "Circular Image",
-        modifier = modifier
+        modifier = Modifier
             .size(100.dp)
             .clip(CircleShape)
             .background(Color.LightGray)
@@ -195,7 +218,7 @@ fun ProfileImage(modifier: Modifier) {
 }
 
 @Composable
-fun EditPhoto(modifier: Modifier) {
+fun EditPhoto(modifier: Modifier,launcher: androidx.activity.compose.ManagedActivityResultLauncher<String, Uri?>) {
     Box(
         modifier = modifier
             .border(
@@ -204,6 +227,9 @@ fun EditPhoto(modifier: Modifier) {
                 shape = RoundedCornerShape(8.dp)
             )
             .padding(7.dp)
+            .clickable {
+                launcher.launch("image/*")
+            }
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,

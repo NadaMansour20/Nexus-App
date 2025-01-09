@@ -80,7 +80,7 @@ fun HomeScreen(modifier: Modifier,navController:NavController, innerpadding: Pad
 
                 ) {
 
-                val icon = painterResource(id = R.drawable.notify)
+                val icon = painterResource(id = R.drawable.notification)
 
                 IconButton(
                     onClick = {
