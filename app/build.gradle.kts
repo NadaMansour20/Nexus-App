@@ -67,6 +67,13 @@ dependencies {
 
     implementation(libs.animated.navigation.bar)
 
+    implementation(libs.coil.compose)
+    implementation(libs.coil)
+
+    
+
+
+
 
 
 

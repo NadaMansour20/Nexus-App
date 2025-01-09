@@ -12,6 +12,8 @@ androidxMaterial3Version = "1.0.0-alpha04"
 androidxNavigationCompose = "2.7.2"
 animatedNavigationBar = "1.0.0"
 animation = "1.7.6"
+coil = "2.7.0"
+coilCompose = "2.7.0"
 composeBomVersion = "2024.01.00"
 kotlin = "2.0.0"
 coreKtx = "1.15.0"
@@ -63,6 +65,8 @@ androidx-navigation-compose = { module = "androidx.navigation:navigation-compose
 androidx-navigation-compose-v260 = { module = "androidx.navigation:navigation-compose", version.ref = "navigationComposeVersion" }
 androidx-navigation-compose-v272 = { module = "androidx.navigation:navigation-compose", version.ref = "androidxNavigationCompose" }
 animated-navigation-bar = { module = "com.exyte:animated-navigation-bar", version.ref = "animatedNavigationBar" }
+coil = { module = "io.coil-kt:coil", version.ref = "coil" }
+coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coilCompose" }
 getstream-stream-video-android-ui-compose = { module = "io.getstream:stream-video-android-ui-compose", version.ref = "streamVideoAndroidUiCompose" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
