@@ -62,8 +62,10 @@ fun UserProfileScreen(navController: NavController,preferenceManager: Preference
 
     val layoutDirection = LocalLayoutDirection.current
 
+    val scrollState = rememberScrollState()
+
     Column(
-        modifier = Modifier.fillMaxSize()
+        modifier = Modifier.fillMaxSize().verticalScroll(scrollState)
 
     )
         {
@@ -94,8 +96,9 @@ fun UserProfileScreen(navController: NavController,preferenceManager: Preference
         ContactInfo(Modifier.padding(top = 30.dp, start = 20.dp))
 
         Info(Modifier.padding(start =40.dp,top = 20.dp))
+        Settings(Modifier.padding(start =20.dp,top = 20.dp))
 
-        Setting(Modifier.padding(top = 30.dp, start= 20.dp),layoutDirection,preferenceManager)
+        Language(Modifier.padding(top = 30.dp, start= 20.dp),layoutDirection,preferenceManager)
 
         Notification(Modifier.padding(start = 20.dp,top= 30.dp))
 
@@ -202,16 +205,34 @@ fun Info(modifier: Modifier = Modifier){
     }
 }
 
+@Composable
+fun Settings(modifier: Modifier){
+    Row(
+        modifier=modifier
+    ) {
+
+        Photo(id=R.drawable.ic_setting)
+
+        Text(
+            stringResource(id = R.string.Settings),
+            fontSize = 20.sp,
+            color = Color.Black,
+            fontWeight = FontWeight.Bold,
+            modifier = Modifier
+                .padding(horizontal = 10.dp)
+        )
+    }
+}
+
 
 @Composable
-fun Setting(modifier: Modifier, localDirection: LayoutDirection,preferenceManager: PreferenceManager){
+fun Language(modifier: Modifier, localDirection: LayoutDirection,preferenceManager: PreferenceManager){
 
     val context = LocalContext.current
 
     Row(modifier=modifier) {
 
-        Photo(id=R.drawable.ic_setting)
-
+        Photo(R.drawable.language)
 
         var showDialog by remember { mutableStateOf(false) }
         var selectedTheme by remember { mutableStateOf("Light") }
@@ -224,7 +245,7 @@ fun Setting(modifier: Modifier, localDirection: LayoutDirection,preferenceManage
             ,horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Text(
-                stringResource(id = R.string.Settings),
+                stringResource(R.string.language),
                 fontSize = 20.sp,
                 color = Color.Black,
                 fontWeight = FontWeight.Bold,
@@ -346,6 +367,7 @@ fun Notification(modifier: Modifier){
 
     }
 }
+
 @Composable
 fun Privacy(modifier: Modifier){
     Row(modifier=modifier) {
@@ -445,8 +467,7 @@ fun AddAccount(modifier: Modifier, localDirection: LayoutDirection){
 @Composable
 fun SignOut(modifier: Modifier, localDirection: LayoutDirection) {
     Row(modifier = modifier) {
-        Photo(R.drawable.ic_logout)
-
+        Photo(R.drawable.ic_logout,Color.Red)
         var showDialog by remember { mutableStateOf(false) }
 
         Column(
@@ -510,13 +531,14 @@ fun SignOut(modifier: Modifier, localDirection: LayoutDirection) {
 
 
 @Composable
-fun Photo(id:Int){
+fun Photo(id:Int,tint: Color = Color.Black){
     val image = painterResource(id =id)
 
     Icon(
         painter = image,
         contentDescription = "Circular Image",
-        modifier = Modifier.size(24.dp)
+        modifier = Modifier.size(24.dp),
+        tint = tint
 
     )
 }

@@ -18,11 +18,15 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
@@ -32,28 +36,33 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.zIndex
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.training.graduation.R
+import com.training.graduation.screens.notification.NotificationScreen
 
 
 @OptIn(ExperimentalMaterial3Api::class)
-@Preview(showSystemUi = true)
 @Composable
-fun Profile(){
+fun Profile(navController: NavController){
 
     Box(
         modifier = Modifier
             .fillMaxSize()
     ) {
-        BackgroundContent()
+        BackgroundContent(navController)
 
         Card(
             modifier = Modifier
@@ -70,7 +79,7 @@ fun Profile(){
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Spacer(modifier = Modifier.height(80.dp)) // مساحة للصورة
+                Spacer(modifier = Modifier.height(80.dp))
                 EditPhoto(Modifier.padding(bottom = 20.dp))
 
                 OutlinedTextField(
@@ -120,14 +129,38 @@ fun Profile(){
                 Button(
                     onClick = {
                     },
-                    colors = ButtonDefaults.buttonColors(
-                        colorResource(R.color.basic_color)
-                    ),
                     modifier = Modifier
-                        .height(60.dp)
-                        .width(150.dp)
-                ) {
-                    Text(stringResource(R.string.edit), fontSize = 20.sp)
+                        .fillMaxWidth()
+                        .padding(start = 80.dp, end = 80.dp, top = 50.dp)
+                        .height(40.dp)
+                        .background(
+                            brush = Brush.linearGradient(
+                                colors = listOf(Color(0xFF000000), Color(0xFF3533CD)),
+                                start = Offset(
+                                    0f,
+                                    0f
+                                ),
+                                end = Offset(
+                                    Float.POSITIVE_INFINITY,
+                                    Float.POSITIVE_INFINITY
+                                )
+                            ),
+                            shape = RoundedCornerShape(30.dp)
+                        ),
+
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = Color.Transparent,
+                        contentColor = Color.White
+
+                    ),
+
+                    ) {
+                    Text(
+                        text = "Edit",
+                        color = Color.White,
+                        fontWeight = FontWeight.Bold,
+                        fontSize = 17.sp
+                    )
                 }
             }
         }
@@ -144,6 +177,7 @@ fun Profile(){
         }
     }
 
+
 }
 
 @Composable
@@ -153,7 +187,7 @@ fun ProfileImage(modifier: Modifier) {
     Image(
         painter = image,
         contentDescription = "Circular Image",
-        modifier =modifier
+        modifier = modifier
             .size(100.dp)
             .clip(CircleShape)
             .background(Color.LightGray)
@@ -189,10 +223,47 @@ fun EditPhoto(modifier: Modifier) {
 }
 
 @Composable
-fun BackgroundContent() {
+fun BackgroundContent(navController: NavController) {
     Box(
         modifier = Modifier
             .fillMaxSize()
             .background(color = colorResource(R.color.basic_color))
-    )
+
+    ) {
+        Column( modifier = Modifier.padding(top = 30.dp, start = 10.dp),
+        ) {
+
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                IconButton(
+                    onClick = {
+                        navController.navigateUp()
+                    }
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.ArrowBack,
+                        contentDescription = "Back",
+                        modifier = Modifier.padding(end = 8.dp)
+                    )
+
+                }
+                Text(
+                    stringResource(R.string.edit_your_profile),
+                    style = TextStyle(fontWeight = FontWeight.Bold, fontSize = 20.sp)
+                )
+
+            }
+        }
+    }
+}
+
+@Preview(showSystemUi = true)
+@Composable
+fun Edit(){
+
+    val navController = rememberNavController()
+    Profile(navController = navController)
 }

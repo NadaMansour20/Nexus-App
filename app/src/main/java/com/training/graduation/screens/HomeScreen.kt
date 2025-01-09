@@ -1,5 +1,7 @@
 package com.training.graduation.screens
 
+import android.content.Intent
+import android.graphics.drawable.Icon
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
@@ -16,10 +18,12 @@ import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextFieldDefaults
@@ -34,6 +38,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
@@ -41,13 +46,18 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.training.graduation.MainActivity
 import com.training.graduation.R
 import com.training.graduation.navigation.BottomNavigationBar
+import com.training.graduation.screens.profile.Photo
+import com.training.graduation.screens.startmeeting.QuestionsDialog
 
 
 @Composable
 fun HomeScreen(modifier: Modifier,navController:NavController, innerpadding: PaddingValues) {
     var showDialog by remember { mutableStateOf(false) } // State to control dialog visibility
+
+    val context = LocalContext.current
 
 
 
@@ -65,11 +75,25 @@ fun HomeScreen(modifier: Modifier,navController:NavController, innerpadding: Pad
         ) {
             Row(
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 16.dp),
+                    .fillMaxWidth(),
                 verticalAlignment = Alignment.CenterVertically,
 
                 ) {
+
+                val icon = painterResource(id = R.drawable.notify)
+
+                IconButton(
+                    onClick = {
+                        navController.navigate("notification_screen")
+                    }
+                ) {
+                    Icon(
+                        painter = icon,
+                        contentDescription = "Circular Image",
+                        modifier = Modifier.size(24.dp),
+                        tint = colorResource(R.color.yellow)
+                    )
+                }
                 Spacer(modifier = Modifier.height(100.dp))
                 SearchBar(
                     onSearch = { query ->
@@ -90,6 +114,8 @@ fun HomeScreen(modifier: Modifier,navController:NavController, innerpadding: Pad
             Card(onClick = {
 
                 navController.navigate("start_meeting")
+//                val intent = Intent(context, StartVideo::class.java)
+//                context.startActivity(intent)
 
             },modifier= Modifier
                 .fillMaxWidth()
@@ -108,6 +134,7 @@ fun HomeScreen(modifier: Modifier,navController:NavController, innerpadding: Pad
                             modifier = Modifier.size(20.dp),
                             tint = Color.Black
                         )
+                        Spacer(Modifier.padding(top = 5.dp))
                         Text(stringResource(R.string.start_meeting), fontWeight = FontWeight.Bold)
                         if (showDialog) {
                             QuestionsDialog(onDismissRequest = { showDialog = false })
@@ -151,6 +178,7 @@ fun HomeScreen(modifier: Modifier,navController:NavController, innerpadding: Pad
                                 modifier = Modifier.size(20.dp),
                                 tint = Color.Black
                             )
+                            Spacer(Modifier.padding(top = 5.dp))
                             Text(stringResource(R.string.schedule), fontWeight = FontWeight.Bold)
                         }
                     }
@@ -176,6 +204,7 @@ fun HomeScreen(modifier: Modifier,navController:NavController, innerpadding: Pad
                                 modifier = Modifier.size(60.dp)
 
                             )
+                            Spacer(Modifier.padding(top = 5.dp))
                             //Text("AI Asset", fontWeight = FontWeight.Bold)
                             Text(stringResource(R.string.comming_soon), fontWeight = FontWeight.SemiBold)
                         }
@@ -224,7 +253,7 @@ fun SearchBar(
         },
         colors = TextFieldDefaults.outlinedTextFieldColors(
             containerColor = Color.White,
-            focusedBorderColor = Color(0xFF3533CD),
+            focusedBorderColor = colorResource(R.color.basic_color),
             unfocusedBorderColor = Color.Gray,
             cursorColor = Color.Black
         ),

@@ -68,10 +68,18 @@
     <string name="Fri">Fri</string>
     <string name="Sat">Sat</string>
     <string name="back_to_login">Back to Login</string>
-    <string name="change_password">Change Password</string>
+    <string name="change_password">تغيير الباسورد</string>
     <string name="chat">محادثه</string>
     <string name="home">الرئيسيه</string>
     <string name="group">الجروبات</string>
     <string name="profile">صفحه المستخدم</string>
+    <string name="create_your_own_group">انشأ الجروب الخاص بك</string>
+    <string name="you_don_t_have_any_notifications">ليس لديك اي اشعارات...</string>
+    <string name="edit_your_profile">تعديل البيانات</string>
+    <string name="notifications">الاشعارات</string>
+    <string name="create_new_group">أنشأ جروب جديد</string>
+    <string name="schedule_meetings">جدوله الاجتماعات الخاصه بك</string>
+    <string name="select_time">select_time</string>
+    <string name="language">Language</string>
 
 </resources>
