@@ -47,12 +47,7 @@ fun ChatScreen(modifier: Modifier) {
     val messages = remember { mutableStateListOf<Message>() }
     var messageText by remember { mutableStateOf("") }
     Box(modifier = modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-        Image(
-            painter = painterResource(id = R.drawable.background),
-            contentDescription = null,
-            modifier = Modifier.fillMaxSize(),
-            contentScale = ContentScale.FillBounds
-        )
+
         Column(
             modifier = Modifier
                 .fillMaxSize()

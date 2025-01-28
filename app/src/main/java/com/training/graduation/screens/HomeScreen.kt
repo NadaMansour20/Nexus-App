@@ -46,12 +46,10 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.training.graduation.MainActivity
 import com.training.graduation.R
 import com.training.graduation.navigation.BottomNavigationBar
 import com.training.graduation.screens.profile.Photo
 import com.training.graduation.screens.startmeeting.QuestionsDialog
-import com.training.graduation.screens.startmeeting.StartVideo
 
 
 @Composable
@@ -63,12 +61,7 @@ fun HomeScreen(modifier: Modifier,navController:NavController, innerpadding: Pad
 
 
     Box(modifier = modifier.padding(innerpadding).fillMaxSize(), contentAlignment = Alignment.Center) {
-        Image(
-            painter = painterResource(id = R.drawable.background),
-            contentDescription = null,
-            modifier = Modifier.fillMaxSize(),
-            contentScale = ContentScale.FillBounds
-        )
+
         val scrollState = rememberScrollState()
         Column(
             modifier = Modifier.fillMaxSize().verticalScroll(scrollState).padding(16.dp),
@@ -113,9 +106,9 @@ fun HomeScreen(modifier: Modifier,navController:NavController, innerpadding: Pad
             }
             Card(onClick = {
 
-                //navController.navigate("start_meeting")
-                val intent = Intent(context, StartVideo::class.java)
-                context.startActivity(intent)
+                navController.navigate("start_meeting")
+
+
 
             },modifier= Modifier
                 .fillMaxWidth()
