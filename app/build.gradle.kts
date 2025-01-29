@@ -52,6 +52,7 @@ dependencies {
     implementation(libs.androidx.navigation.runtime.ktx)
     implementation(libs.androidx.benchmark.macro)
     implementation(libs.material)
+    implementation(libs.androidx.material3.android)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -70,18 +71,16 @@ dependencies {
     implementation(libs.coil.compose)
     implementation(libs.coil)
 
-    implementation("io.getstream:stream-video-android-ui-compose:1.2.0")
-    implementation("androidx.compose.material3:material3:1.3.1")
-    implementation("androidx.compose.material3:material3-window-size-class:1.3.1")
-    implementation("androidx.compose.material3:material3-adaptive-navigation-suite:1.4.0-alpha05")
-    implementation( "androidx.compose.material:material:1.5.1")
-    implementation ("androidx.compose.material:material-icons-core:1.5.1")
-    implementation ("androidx.compose.material:material-icons-extended:1.5.1")
+//    implementation (libs.sdk)
 
+    implementation("org.jitsi.react:jitsi-meet-sdk:+") {
+        isTransitive = true
+    }
+    implementation ("org.jitsi.react:jitsi-meet-sdk:10.3.0")
 
-
-
-
+    implementation ("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation ("com.squareup.retrofit2:converter-gson:2.9.0")
+    implementation ("com.squareup.okhttp3:logging-interceptor:4.9.3")
 
 
 

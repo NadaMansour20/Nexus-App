@@ -20,6 +20,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.training.graduation.R
+import okhttp3.internal.wait
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -78,16 +79,6 @@ fun ScheduleInputs(onClose: () -> Unit) {
                 meetingNameError = if (it.isEmpty()) context.getString(R.string.meeting_name_is_required) else null
             },
             shape = RoundedCornerShape(16.dp),
-            colors = TextFieldDefaults.colors(
-
-                focusedIndicatorColor = colorResource(R.color.purple_200),
-                unfocusedIndicatorColor = Color.Gray,
-
-                ),
-//            colors = TextFieldDefaults.outlinedTextFieldColors(
-//                focusedBorderColor = MaterialTheme.colorScheme.primary,
-//                unfocusedBorderColor = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.5f)
-//            ),
             label = { Text(stringResource(R.string.meeting_name)) },
             isError = meetingNameError != null,
             modifier = Modifier
@@ -186,16 +177,6 @@ fun ScheduleInputs(onClose: () -> Unit) {
                 meetingDescriptionError = if (it.isEmpty()) context.getString(R.string.description_is_required) else null
             },
             shape = RoundedCornerShape(16.dp),
-            colors = TextFieldDefaults.colors(
-
-                focusedIndicatorColor = colorResource(R.color.purple_200),
-                unfocusedIndicatorColor = Color.Gray,
-
-                ),
-//            colors = TextFieldDefaults.outlinedTextFieldColors(
-//                focusedBorderColor = MaterialTheme.colorScheme.primary,
-//                unfocusedBorderColor = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.5f)
-//            ),
             label = { Text(stringResource(R.string.description)) },
             isError = meetingDescriptionError != null,
             modifier = Modifier

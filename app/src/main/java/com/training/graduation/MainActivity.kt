@@ -1,5 +1,7 @@
 package com.training.graduation
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -12,6 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.android.meetingjitis.JitsiMeetCompose
 //import com.squareup.wire.internal.Serializable
 import com.training.graduation.onboarding.OnboardingScreen
 import com.training.graduation.screens.ChatListScreen
@@ -29,6 +32,10 @@ import com.training.graduation.screens.profile.UserProfileScreen
 import com.training.graduation.screens.sharedprefrence.PreferenceManager
 import com.training.graduation.screens.sharedprefrence.UpdateLocale
 import com.training.graduation.ui.theme.GraduationTheme
+import org.jitsi.meet.sdk.JitsiMeet
+import org.jitsi.meet.sdk.JitsiMeetConferenceOptions
+import java.net.URL
+
 //import com.training.graduation.screens.StartScreen
 
 class MainActivity : ComponentActivity() {
@@ -36,6 +43,28 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
 
+
+        // إعداد الخيارات الافتراضية لـ Jitsi Meet
+        val serverURL = URL("https://meet.jit.si")
+        val defaultOptions = JitsiMeetConferenceOptions.Builder()
+            .setServerURL(serverURL)
+            // تعيين الإعدادات الافتراضية هنا
+            .setFeatureFlag("welcomepage.enabled", false)
+            .build()
+        JitsiMeet.setDefaultConferenceOptions(defaultOptions)
+
+
+//        val clientId = "LhAg7qEjQLSUdzb7URamNA"
+//        val redirectUri = "nexus://callback"
+//
+//        val authUrl = "https://zoom.us/oauth/authorize?response_type=code&client_id=$clientId&redirect_uri=$redirectUri"
+//
+//        // فتح الرابط في متصفح أو WebView
+//        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(authUrl))
+//        startActivity(intent)
+//
+//
+//
         val preferenceManager = PreferenceManager(this)
 
         // Apply saved language on app launch
@@ -95,6 +124,9 @@ fun AppNavigation(modifier: Modifier,preferenceManager:PreferenceManager) {
         }
         composable(route="notification_screen"){
             NotificationScreen( navController)
+        }
+        composable(route="start_meeting") {
+            JitsiMeetCompose()
         }
 
     }

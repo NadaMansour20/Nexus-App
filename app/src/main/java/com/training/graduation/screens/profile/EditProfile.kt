@@ -45,6 +45,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -109,63 +110,30 @@ fun Profile(navController: NavController){
                 OutlinedTextField(
                     value = "",
                     onValueChange = {},
-                    shape = RoundedCornerShape(16.dp),
-                    colors = TextFieldDefaults.colors(
-
-                        focusedIndicatorColor = colorResource(R.color.purple_200),
-                        unfocusedIndicatorColor = Color.Gray,
-
-                    ),
-//                        focusedBorderColor = MaterialTheme.colorScheme.primary,
-//                        unfocusedBorderColor = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.5f)
-//                    ),
+                    shape = RoundedCornerShape(25.dp),
                     label = { Text(stringResource(R.string.username)) },
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(15.dp)
+                        .padding(25.dp)
                 )
-                Spacer(modifier = Modifier.height(10.dp))
-
                 OutlinedTextField(
                     value = "",
                     onValueChange = {},
-                    shape = RoundedCornerShape(16.dp),
-                    colors = TextFieldDefaults.colors(
-
-                        focusedIndicatorColor = colorResource(R.color.purple_200),
-                        unfocusedIndicatorColor = Color.Gray,
-
-                        ),
-//                    colors = TextFieldDefaults.outlinedTextFieldColors(
-//                        focusedBorderColor = MaterialTheme.colorScheme.primary,
-//                        unfocusedBorderColor = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.5f)
-//                    ),
+                    shape = RoundedCornerShape(25.dp),
                     label = { Text(stringResource(R.string.Email)) },
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(15.dp)
+                        .padding(bottom = 25.dp, start = 25.dp, end = 25.dp)
                 )
-                Spacer(modifier = Modifier.height(10.dp))
                 OutlinedTextField(
                     value = "",
                     onValueChange = {},
-                    shape = RoundedCornerShape(16.dp),
-                    colors = TextFieldDefaults.colors(
-
-                        focusedIndicatorColor = colorResource(R.color.purple_200),
-                        unfocusedIndicatorColor = Color.Gray,
-
-                        ),
-//                    colors = TextFieldDefaults.outlinedTextFieldColors(
-//                        focusedBorderColor = MaterialTheme.colorScheme.primary,
-//                        unfocusedBorderColor = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.5f)
-//                    ),
+                    shape = RoundedCornerShape(25.dp),
                     label = { Text(stringResource(R.string.Password)) },
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(15.dp)
+                        .padding(bottom = 25.dp, start = 25.dp, end = 25.dp)
                 )
-                Spacer(modifier = Modifier.height(10.dp))
 
                 Button(
                     onClick = {
@@ -226,6 +194,7 @@ fun ProfileImage(painter: AsyncImagePainter) {
 
     Image(
         painter = painter,
+        contentScale = ContentScale.Crop,
         contentDescription = "Circular Image",
         modifier = Modifier
             .size(100.dp)
