@@ -135,3 +135,67 @@ fun sendInvitation(context: Context, roomName: String, password: String) {
     // بدء نشاط إرسال الرسالة
     context.startActivity(Intent.createChooser(intent, "Send Invitation via"))
 }
+
+
+/*@Composable
+fun JitsiMeetingScreen(navController: NavController) {
+    Column(modifier = Modifier.fillMaxSize()) {
+        Button(onClick = { navController.popBackStack() }) {
+            Text("رجوع")
+        }
+        JitsiWebView()
+//        AndroidView(
+//            modifier = Modifier.fillMaxSize(),
+//            factory = { context ->
+//                WebView(context).apply {
+//                    settings.apply {
+//                        javaScriptEnabled = true
+//                        domStorageEnabled = true
+//                        mediaPlaybackRequiresUserGesture = false
+//                        allowFileAccess = true
+//                        allowContentAccess = true
+//                        allowFileAccessFromFileURLs = true
+//                        allowUniversalAccessFromFileURLs = true
+//                    }
+//                    webChromeClient = WebChromeClient()
+//                    webViewClient = object : WebViewClient() {
+//                        override fun shouldOverrideUrlLoading(view: WebView?, url: String?): Boolean {
+//                            return false
+//                        }
+//                    }
+//                    loadUrl("file:///android_asset/jitsi.html")
+//                }
+//            }
+//        )
+    }
+}
+
+
+@SuppressLint("SetJavaScriptEnabled")
+@Composable
+fun JitsiWebView() {
+    AndroidView(
+        modifier = Modifier.fillMaxSize(),
+        factory = { context ->
+            WebView(context).apply {
+                settings.apply {
+                    javaScriptEnabled = true
+                    domStorageEnabled = true
+                    mediaPlaybackRequiresUserGesture = false
+                    allowFileAccess = true
+                    allowContentAccess = true
+                    allowFileAccessFromFileURLs = true  // ✅ حل المشكلة
+                    allowUniversalAccessFromFileURLs = true // ✅ حل المشكلة
+                }
+                webViewClient = WebViewClient()
+                webChromeClient = WebChromeClient()
+                webViewClient = object : WebViewClient() {
+                    override fun shouldOverrideUrlLoading(view: WebView?, url: String?): Boolean {
+                        return false
+                    }
+                }
+                loadUrl("file:///android_asset/jitsi.html")
+            }
+        }
+    )
+}*/

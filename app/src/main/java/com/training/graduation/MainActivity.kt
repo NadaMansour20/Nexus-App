@@ -14,7 +14,9 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+//import com.android.meetingjitis.JitsiActivity
 import com.android.meetingjitis.JitsiMeetCompose
+//import com.android.meetingjitis.JitsiMeetCompose
 //import com.squareup.wire.internal.Serializable
 import com.training.graduation.onboarding.OnboardingScreen
 import com.training.graduation.screens.ChatListScreen
@@ -108,7 +110,7 @@ fun AppNavigation(modifier: Modifier,preferenceManager:PreferenceManager) {
             UserProfileScreen(navController,preferenceManager =preferenceManager)
         }
         composable(route = "chat") {
-            ChatListScreen(modifier, navController, innerpadding = PaddingValues())
+            ChatListScreen( navController)
         }
         composable(route = "group") {
             GroupListScreen(navController)
@@ -126,7 +128,7 @@ fun AppNavigation(modifier: Modifier,preferenceManager:PreferenceManager) {
             NotificationScreen( navController)
         }
         composable(route="start_meeting") {
-            JitsiMeetCompose()
+          JitsiMeetCompose()
         }
 
     }
