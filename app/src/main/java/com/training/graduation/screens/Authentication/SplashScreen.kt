@@ -1,4 +1,4 @@
-package com.training.graduation.screens
+package com.training.graduation.screens.Authentication
 
 
 import androidx.compose.foundation.background

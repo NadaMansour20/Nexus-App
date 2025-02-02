@@ -55,6 +55,7 @@
     <string name="meeting_name">" Meeting Name"</string>
     <string name="date_and_time">Date and Time</string>
     <string name="date_is_required">Date is required</string>
+    <string name="time_is_required">Time is required</string>
     <string name="meeting_name_is_required">Meeting name is required</string>
     <string name="meeting_description">Meeting Description</string>
     <string name="description_is_required">Description is required</string>
@@ -80,4 +81,11 @@
     <string name="schedule_meetings">Schedule your Meetings</string>
     <string name="select_time">select Time</string>
     <string name="language">Language</string>
+    <string name="please_enter_password">Please enter password</string>
+    <string name="password">Password</string>
+    <string name="please_enter_meeting_name">Please enter meeting name</string>
+    <string name="let_s_start_your_meeting">Let\'s Start Your Meeting</string>
+    <string name="you_are_invited_to_join_the_meeting_click_the_link_below">You are invited to join the meeting. Click the link below:\n%1$s</string>
+    <string name="send_invitation">Send Invitation</string>
+    <string name="join_meeting">Join Meeting</string>
 </resources>

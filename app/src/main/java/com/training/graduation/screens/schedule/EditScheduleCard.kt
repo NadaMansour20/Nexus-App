@@ -13,14 +13,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.training.graduation.R
-import okhttp3.internal.wait
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -50,7 +48,6 @@ fun Edit_schedule(onClose: () -> Unit) {
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ScheduleInputs(onClose: () -> Unit) {
     val context = LocalContext.current
@@ -58,9 +55,11 @@ fun ScheduleInputs(onClose: () -> Unit) {
     var selectedTime by remember { mutableStateOf("") }
     var meetingName by remember { mutableStateOf("") }
     var meetingDescription by remember { mutableStateOf("") }
-    var meetingNameError by remember { mutableStateOf<String?>(null) }
-    var meetingDescriptionError by remember { mutableStateOf<String?>(null) }
-    var selectDateError by remember { mutableStateOf<String?>(null) }
+    var meetingNameError by remember { mutableStateOf(false) }
+    var meetingDescriptionError by remember { mutableStateOf(false) }
+    var selectDateError by remember { mutableStateOf(false) }
+    var selectedTimeError by remember { mutableStateOf(false) }
+
 
     Column(
         modifier = Modifier
@@ -76,22 +75,25 @@ fun ScheduleInputs(onClose: () -> Unit) {
             value = meetingName,
             onValueChange = {
                 meetingName = it
-                meetingNameError = if (it.isEmpty()) context.getString(R.string.meeting_name_is_required) else null
+                meetingNameError = it.isEmpty()
             },
             shape = RoundedCornerShape(16.dp),
             label = { Text(stringResource(R.string.meeting_name)) },
-            isError = meetingNameError != null,
+            isError = meetingNameError ,
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(vertical = 8.dp)
+                .padding(vertical = 8.dp),
+            supportingText = {
+                if (meetingNameError) {
+                    Text(
+                        text = stringResource(R.string.meeting_name_is_required),
+                        color = MaterialTheme.colorScheme.error,
+                        style = MaterialTheme.typography.bodySmall
+                    )
+                }
+            }
         )
-        if (meetingNameError != null) {
-            Text(
-                text = meetingNameError ?: "",
-                color = MaterialTheme.colorScheme.error,
-                style = MaterialTheme.typography.bodySmall
-            )
-        }
+
 
         Spacer(modifier = Modifier.padding(top = 25.dp))
 
@@ -113,9 +115,22 @@ fun ScheduleInputs(onClose: () -> Unit) {
             ) {
                 OutlinedTextField(
                     value = selectedDate,
-                    onValueChange = { },
+                    onValueChange = {
+                        selectedDate = it
+                        selectDateError = it.isEmpty()
+                    },
                     shape = RoundedCornerShape(16.dp),
                     label = { Text(stringResource(R.string.select_date)) },
+                    isError = selectedTimeError,
+                    supportingText = {
+                        if (selectDateError) {
+                            Text(
+                                text = stringResource(R.string.date_is_required),
+                                color = MaterialTheme.colorScheme.error,
+                                style = MaterialTheme.typography.bodySmall
+                            )
+                        }
+                    },
                     trailingIcon = {
                         IconButton(onClick = {
                             ShowDatePicker(context) { date ->
@@ -142,9 +157,24 @@ fun ScheduleInputs(onClose: () -> Unit) {
             ) {
                 OutlinedTextField(
                     value = selectedTime,
-                    onValueChange = { },
+                    onValueChange =
+                    {
+                        selectedTime=it
+                        selectedTimeError=it.isEmpty()
+                    },
+                    isError = selectedTimeError,
                     shape = RoundedCornerShape(16.dp),
                     label = { Text(stringResource(R.string.select_time)) },
+                    supportingText = {
+                        if (selectedTimeError) {
+                            Text(
+                                text = stringResource(R.string.time_is_required),
+                                color = MaterialTheme.colorScheme.error,
+                                style = MaterialTheme.typography.bodySmall
+
+                            )
+                        }
+                    },
                     trailingIcon = {
                         IconButton(onClick = {
                             ShowTimePicker(context) { time ->
@@ -174,11 +204,20 @@ fun ScheduleInputs(onClose: () -> Unit) {
             value = meetingDescription,
             onValueChange = {
                 meetingDescription = it
-                meetingDescriptionError = if (it.isEmpty()) context.getString(R.string.description_is_required) else null
+                meetingDescriptionError = it.isEmpty()
             },
             shape = RoundedCornerShape(16.dp),
             label = { Text(stringResource(R.string.description)) },
-            isError = meetingDescriptionError != null,
+            isError = meetingDescriptionError,
+            supportingText = {
+                if (meetingDescriptionError) {
+                    Text(
+                        text = stringResource(R.string.description_is_required),
+                        color = MaterialTheme.colorScheme.error,
+                        style = MaterialTheme.typography.bodySmall
+                    )
+                }
+            },
             modifier = Modifier
                 .fillMaxWidth()
                 .height(170.dp)
@@ -186,15 +225,36 @@ fun ScheduleInputs(onClose: () -> Unit) {
             maxLines = 4,
             singleLine = false,
         )
-        if (meetingDescriptionError != null) {
-            Text(
-                text = meetingDescriptionError ?: "",
-                color = MaterialTheme.colorScheme.error,
-                style = MaterialTheme.typography.bodySmall
-            )
+        Row {
+            Button(onClick = {
+                if (meetingName.isBlank()) {
+                    meetingNameError = true
+                } else {
+                    meetingNameError= false
+                }
+                if (meetingDescription.isBlank()) {
+                    meetingDescriptionError = true
+                } else {
+                    meetingDescriptionError= false
+                }
+                if (selectedTime.isBlank()) {
+                    selectedTimeError = true
+                } else {
+                    selectedTimeError= false
+                }
+                if (selectedDate.isBlank()) {
+                    selectDateError = true
+                } else {
+                    selectDateError= false
+                }
+            }) {
+                Text(stringResource(R.string.Save))
+            }
+            Spacer(modifier = Modifier.padding(start = 10.dp))
+            Button(onClick = onClose) {
+                Text(stringResource(R.string.Cancel))
+            }
         }
-
-        Button_Save_Schedule(onClose)
     }
 }
 
@@ -238,15 +298,3 @@ fun ShowTimePicker(context: Context, onTimeSelected: (String) -> Unit) {
     ).show()
 }
 
-@Composable
-fun Button_Save_Schedule(onClose: () -> Unit) {
-    Row {
-        Button(onClick = {}) {
-            Text(stringResource(R.string.Save))
-        }
-        Spacer(modifier = Modifier.padding(start = 10.dp))
-        Button(onClick = onClose) {
-            Text(stringResource(R.string.Cancel))
-        }
-    }
-}

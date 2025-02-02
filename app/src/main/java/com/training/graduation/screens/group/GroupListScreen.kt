@@ -1,6 +1,5 @@
 package com.training.graduation.screens.group
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -20,7 +19,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -30,10 +28,8 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.training.graduation.R
 import com.training.graduation.navigation.BottomNavigationBar
-import com.training.graduation.screens.Menu
 import com.training.graduation.screens.profile.Photo
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -54,12 +50,12 @@ import androidx.compose.ui.res.vectorResource
 
 
 // Data class for Group
-data class Group(val groupName: String, val groupDescription: String, val time: String)
+data class Group(//val image : Int,
+ val groupName: String, val groupDescription: String, val time: String)
 
 // Main composable screen
 @Composable
 fun GroupListScreen(navController: NavController) {
-    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
         val groups = remember {
             mutableStateListOf(
                 Group("Learn Programming", "Join the group to learn programming languages, tutorials, and challenges.", "2:15 PM"),
@@ -83,7 +79,7 @@ fun GroupListScreen(navController: NavController) {
                 style = TextStyle(fontSize = 24.sp, fontWeight = FontWeight.Bold),
                 modifier = Modifier.padding(bottom = 16.dp)
             )
-            com.training.graduation.screens.SearchBar(
+            com.training.graduation.screens.mainscreen.SearchBar(
                 onSearch = { query ->
                     println("Search query: $query")
                 }
@@ -101,7 +97,6 @@ fun GroupListScreen(navController: NavController) {
 
         // Bottom Navigation Bar
         BottomNavigationBar(navController = navController)
-    }
 }
 
 // Composable for each Group item

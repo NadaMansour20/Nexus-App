@@ -1,7 +1,5 @@
-package com.training.graduation
+package com.training.graduation.screens.mainscreen
 
-import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -14,25 +12,22 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-//import com.android.meetingjitis.JitsiActivity
-import com.android.meetingjitis.JitsiMeetCompose
-//import com.android.meetingjitis.JitsiMeetCompose
-//import com.squareup.wire.internal.Serializable
+
 import com.training.graduation.onboarding.OnboardingScreen
-import com.training.graduation.screens.ChatListScreen
-import com.training.graduation.screens.ForgotPasswordScreen
+import com.training.graduation.screens.chat.ChatListScreen
+import com.training.graduation.screens.Authentication.ForgotPasswordScreen
 import com.training.graduation.screens.group.GroupListScreen
-import com.training.graduation.screens.HomeScreen
-import com.training.graduation.screens.LoginScreen
+import com.training.graduation.screens.Authentication.LoginScreen
 import com.training.graduation.screens.schedule.ScheduleMeeting
-import com.training.graduation.screens.SignupScreen
-import com.training.graduation.screens.SplashScreen
+import com.training.graduation.screens.Authentication.SignupScreen
+import com.training.graduation.screens.Authentication.SplashScreen
 import com.training.graduation.screens.notification.NotificationScreen
 import com.training.graduation.screens.startmeeting.StartMeeting
 import com.training.graduation.screens.profile.Profile
 import com.training.graduation.screens.profile.UserProfileScreen
 import com.training.graduation.screens.sharedprefrence.PreferenceManager
 import com.training.graduation.screens.sharedprefrence.UpdateLocale
+import com.training.graduation.screens.startmeeting.JitsiMeetCompose
 import com.training.graduation.ui.theme.GraduationTheme
 import org.jitsi.meet.sdk.JitsiMeet
 import org.jitsi.meet.sdk.JitsiMeetConferenceOptions
