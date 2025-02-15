@@ -46,7 +46,7 @@ fun BottomNavigationBar(navController: NavController) {
             shape = RoundedCornerShape(25.dp),
             modifier = Modifier
                 .align(alignment = Alignment.BottomEnd)
-                .padding(30.dp)
+                .padding(20.dp)
                 .height(95.dp)
                 .padding(bottom = 20.dp)
                 .fillMaxWidth(),

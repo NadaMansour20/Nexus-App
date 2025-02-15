@@ -1,5 +1,6 @@
 package com.training.graduation.screens.Authentication
 
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -20,7 +21,9 @@ import androidx.compose.material3.RadioButton
 import androidx.compose.material3.RadioButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -39,236 +42,374 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import com.google.android.gms.tasks.OnFailureListener
+import com.google.android.gms.tasks.OnSuccessListener
 import com.training.graduation.R
+import com.training.graduation.db.firebase.addUserToFirestore
+import com.training.graduation.db.model.User
 
 
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 fun SignupScreenPreview(){
-    SignupScreen(modifier = Modifier, navController= NavController(LocalContext.current), innerpadding = PaddingValues())
+    SignupScreen(modifier = Modifier, navController= NavController(LocalContext.current), authViewModel = AuthViewModel(), innerpadding = PaddingValues())
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SignupScreen(modifier: Modifier, navController: NavController, innerpadding: PaddingValues){
+fun SignupScreen(modifier: Modifier, navController: NavController,authViewModel: AuthViewModel, innerpadding: PaddingValues){
+
     var selectedRole by remember { mutableStateOf("User") }
+    var userName by remember { mutableStateOf("") }
+    var userNameError by remember { mutableStateOf(false) }
+    var email by remember { mutableStateOf("") }
+    var emailError by remember { mutableStateOf(false) }
+    var password by remember { mutableStateOf("") }
+    var passwordError by remember { mutableStateOf(false) }
+    var confirmPassword by remember { mutableStateOf("") }
+    var confirmPasswordError by remember { mutableStateOf(false) }
 
-        Column(
-            modifier = Modifier.fillMaxSize(),
-            horizontalAlignment = Alignment.CenterHorizontally
-        ){
-            Spacer(modifier = Modifier.height(40.dp))
-            Text(
-                text = stringResource(R.string.lets),
-                color = Color.Black,
-                fontSize = 40.sp,
-                modifier = Modifier
-                    .align(Alignment.Start)
-                    .padding(start = 20.dp)
 
-            )
-            Spacer(modifier = Modifier.height(5.dp))
-            Text(
-                text = stringResource(R.string.create),
-                color = Color(0xFF3533CD),
-                fontSize = 40.sp,
-                fontWeight = FontWeight.Bold,
-                modifier = Modifier
-                    .align(Alignment.Start)
-                    .padding(start = 20.dp)
-            )
-            Text(
-                text = stringResource(R.string.your),
-                color = Color(0xFF3533CD),
-                fontSize = 40.sp,
-                fontWeight = FontWeight.Bold,
-                modifier = Modifier
-                    .align(Alignment.Start)
-                    .padding(start = 20.dp)
-            )
-            Text(
-                text = stringResource(R.string.account),
-                color = Color(0xFF3533CD),
-                fontSize = 40.sp,
-                fontWeight = FontWeight.Bold,
-                modifier = Modifier
-                    .align(Alignment.Start)
-                    .padding(start = 20.dp)
-            )
-            Spacer(modifier = Modifier.height(30.dp))
+    val authState = authViewModel.authState.observeAsState()
+    val context = LocalContext.current
 
-            Text(
-                text = stringResource(R.string.select_your_role),
-                fontSize = 20.sp,
-                fontWeight = FontWeight.Bold,
-                color = Color.Black,
-                modifier = Modifier
-                    .align(Alignment.Start)
-                    .padding(start = 30.dp)
-            )
-            Spacer(modifier = Modifier.height(10.dp))
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(start = 30.dp),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                RadioButton(
-                    selected = selectedRole == stringResource(R.string.user),
-                    onClick = { "User".also { selectedRole = it } },
-                    colors = RadioButtonDefaults.colors(
-                        selectedColor = Color(0xFF3533CD),
-                        unselectedColor = Color.Gray
-                    )
+    LaunchedEffect(authState.value) {
+        when (authState.value) {
+            is AuthState.Authenticated -> navController.navigate("homescreen")
+            is AuthState.Error -> Toast.makeText(
+                context,
+                (authState.value as AuthState.Error).message, Toast.LENGTH_SHORT
+            ).show()
+
+            else -> Unit
+        }
+    }
+
+
+    Column(
+        modifier = Modifier.fillMaxSize(),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ){
+        Spacer(modifier = Modifier.height(40.dp))
+        Text(
+            text = stringResource(R.string.lets),
+            color = Color.Black,
+            fontSize = 40.sp,
+            modifier = Modifier
+                .align(Alignment.Start)
+                .padding(start = 20.dp)
+
+        )
+        Spacer(modifier = Modifier.height(5.dp))
+        Text(
+            text = stringResource(R.string.create),
+            color = Color(0xFF3533CD),
+            fontSize = 40.sp,
+            fontWeight = FontWeight.Bold,
+            modifier = Modifier
+                .align(Alignment.Start)
+                .padding(start = 20.dp)
+        )
+        Text(
+            text = stringResource(R.string.your),
+            color = Color(0xFF3533CD),
+            fontSize = 40.sp,
+            fontWeight = FontWeight.Bold,
+            modifier = Modifier
+                .align(Alignment.Start)
+                .padding(start = 20.dp)
+        )
+        Text(
+            text = stringResource(R.string.account),
+            color = Color(0xFF3533CD),
+            fontSize = 40.sp,
+            fontWeight = FontWeight.Bold,
+            modifier = Modifier
+                .align(Alignment.Start)
+                .padding(start = 20.dp)
+        )
+        Spacer(modifier = Modifier.height(15.dp))
+
+        Text(
+            text = stringResource(R.string.select_your_role),
+            fontSize = 20.sp,
+            fontWeight = FontWeight.Bold,
+            color = Color.Black,
+            modifier = Modifier
+                .align(Alignment.Start)
+                .padding(start = 30.dp)
+        )
+        Spacer(modifier = Modifier.height(5.dp))
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(start = 30.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            RadioButton(
+                selected = selectedRole == stringResource(R.string.user),
+                onClick = { "User".also { selectedRole = it } },
+                colors = RadioButtonDefaults.colors(
+                    selectedColor = Color(0xFF3533CD),
+                    unselectedColor = Color.Gray
                 )
-                Text(text = stringResource(R.string.user), fontSize = 18.sp)
-                Spacer(modifier = Modifier.width(20.dp))
-                RadioButton(
-                    selected = selectedRole == stringResource(R.string.instructor),
-                    onClick = { "Foundation".also { selectedRole = it } },
-                    colors = RadioButtonDefaults.colors(
-                        selectedColor = Color(0xFF3533CD),
-                        unselectedColor = Color.Gray
-                    )
+            )
+            Text(text = stringResource(R.string.user), fontSize = 18.sp)
+            Spacer(modifier = Modifier.width(5.dp))
+
+            RadioButton(
+                selected = selectedRole == stringResource(R.string.instructor),
+                onClick = { "Foundation".also { selectedRole = it } },
+                colors = RadioButtonDefaults.colors(
+                    selectedColor = Color(0xFF3533CD),
+                    unselectedColor = Color.Gray
                 )
-                Text(text = stringResource(R.string.instructor), fontSize = 18.sp)
-            }
-
-            Spacer(modifier = Modifier.height(10.dp))
-            OutlinedTextField(
-                label = { Text(stringResource(R.string.username)) },
-                value = "",
-                onValueChange = {},
-//                colors = TextFieldDefaults.textFieldColors(
-//                    containerColor = Color.LightGray
-//                ),
-                leadingIcon = {
-                    Icon(
-                        ImageVector.vectorResource(R.drawable.ic_user),
-                        contentDescription = null
-                    )
-                },
-                shape = RoundedCornerShape(25.dp),
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(start = 30.dp, end = 30.dp)
-
             )
-            Spacer(modifier = Modifier.height(10.dp))
-            OutlinedTextField(
-                label = { Text(stringResource(R.string.enter_your_email)) },
-                value = "",
-                onValueChange = {},
-//                colors = TextFieldDefaults.textFieldColors(
-//                    containerColor = Color.LightGray
-//                ),
-                leadingIcon = {
-                    Icon(
-                        ImageVector.vectorResource(R.drawable.ic_email),
-                        contentDescription = null
-                    )
-                },
-                shape = RoundedCornerShape(25.dp),
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(start = 30.dp, end = 30.dp)
-            )
-            Spacer(modifier = Modifier.height(10.dp))
-            OutlinedTextField(
-                label = { Text(stringResource(R.string.enter_your_password)) },
-                value = "",
-                visualTransformation = PasswordVisualTransformation(),
-                onValueChange = {},
-//                colors = TextFieldDefaults.textFieldColors(
-//                    containerColor = Color.LightGray
-//                ),
-                leadingIcon = {
-                    Icon(
-                        ImageVector.vectorResource(R.drawable.ic_lock),
-                        contentDescription = null
-                    )
-                },
-                trailingIcon = {
-                    Icon(
-                        ImageVector.vectorResource(R.drawable.ic_eye),
-                        contentDescription = null
-                    )
-                },
-                shape = RoundedCornerShape(25.dp),
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(start = 30.dp, end = 30.dp)
-            )
+            Text(text = stringResource(R.string.instructor), fontSize = 18.sp)
+        }
 
-            Spacer(modifier = Modifier.height(20.dp))
+        Spacer(modifier = Modifier.height(5.dp))
 
-            OutlinedTextField(
-                label = { Text(stringResource(R.string.confirm_your_password)) },
-                value = "",
-                onValueChange = {},
-//                colors = TextFieldDefaults.textFieldColors(
-//                    containerColor = Color.LightGray
-//                ),
-                leadingIcon = {
-                    Icon(
-                        ImageVector.vectorResource(R.drawable.ic_lock),
-                        contentDescription = null
-                    )
-                },
-                trailingIcon = {
-                    Icon(
-                        ImageVector.vectorResource(R.drawable.ic_eye),
-                        contentDescription = null
-                    )
-                },
-                shape = RoundedCornerShape(25.dp),
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(start = 30.dp, end = 30.dp)
-            )
-            Spacer(modifier = Modifier.height(50.dp))
+        OutlinedTextField(
+            label = { Text(stringResource(R.string.username)) },
+            value = userName,
+            onValueChange = {
+                userName = it
+                userNameError = it.isBlank()
+            },
+            isError = userNameError,
+            supportingText = {
+                if (userNameError) {
+                    Text(stringResource(R.string.please_enter_username), color = Color.Red)
+                }
 
-            Button(
-                onClick = {
-                    navController.navigate("loginscreen"){
-                        popUpTo("signupscreen")
-                    }
-                },
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(start = 30.dp, end = 30.dp)
-                    .height(50.dp)
-                    .background(
-                        brush = Brush.linearGradient(
-                            colors = listOf(Color(0xFF000000), Color(0xFF3533CD)),
-                            start = Offset(
-                                0f,
-                                0f
-                            ),
-                            end = Offset(
-                                Float.POSITIVE_INFINITY,
-                                Float.POSITIVE_INFINITY
-                            )
+            },
+            leadingIcon = {
+                Icon(
+                    ImageVector.vectorResource(R.drawable.ic_user),
+                    contentDescription = null
+                )
+            },
+            shape = RoundedCornerShape(25.dp),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(start = 30.dp, end = 30.dp)
+
+        )
+        Spacer(modifier = Modifier.height(5.dp))
+
+        OutlinedTextField(
+            label = { Text(stringResource(R.string.enter_your_email)) },
+            value = email,
+            onValueChange = {
+                email = it
+                emailError = it.isBlank()
+            },
+            isError = emailError,
+            supportingText = {
+                if (emailError) {
+                    Text(stringResource(R.string.please_enter_email), color = Color.Red)
+                }
+
+            },
+            leadingIcon = {
+                Icon(
+                    ImageVector.vectorResource(R.drawable.ic_email),
+                    contentDescription = null
+                )
+            },
+            shape = RoundedCornerShape(25.dp),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(start = 30.dp, end = 30.dp)
+        )
+        Spacer(modifier = Modifier.height(5.dp))
+
+        OutlinedTextField(
+            label = { Text(stringResource(R.string.enter_your_password)) },
+            value = password,
+            visualTransformation = PasswordVisualTransformation(),
+            onValueChange = {
+                password = it
+                passwordError = it.isBlank()
+            },
+            isError = passwordError,
+            supportingText = {
+                if (passwordError) {
+                    Text(stringResource(R.string.please_enter_password), color = Color.Red)
+                }
+            },
+            leadingIcon = {
+                Icon(
+                    ImageVector.vectorResource(R.drawable.ic_lock),
+                    contentDescription = null
+                )
+            },
+            trailingIcon = {
+                Icon(
+                    ImageVector.vectorResource(R.drawable.ic_eye),
+                    contentDescription = null
+                )
+            },
+            shape = RoundedCornerShape(25.dp),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(start = 30.dp, end = 30.dp)
+        )
+
+        Spacer(modifier = Modifier.height(5.dp))
+
+        OutlinedTextField(
+            label = { Text(stringResource(R.string.confirm_your_password)) },
+            value = confirmPassword,
+            onValueChange = {
+                confirmPassword = it
+                confirmPasswordError = it.isBlank()
+            },
+            isError = confirmPasswordError,
+            supportingText = {
+                if (confirmPasswordError) {
+                    Text(stringResource(R.string.please_enter_confirm_password), color = Color.Red)
+                }
+            },
+            leadingIcon = {
+                Icon(
+                    ImageVector.vectorResource(R.drawable.ic_lock),
+                    contentDescription = null
+                )
+            },
+            trailingIcon = {
+                Icon(
+                    ImageVector.vectorResource(R.drawable.ic_eye),
+                    contentDescription = null
+                )
+            },
+            shape = RoundedCornerShape(25.dp),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(start = 30.dp, end = 30.dp)
+        )
+        Spacer(modifier = Modifier.height(20.dp))
+
+        Button(
+            onClick = {
+                var isValid = true
+
+                if (userName.isBlank()) {
+                    userNameError = true
+                    isValid = false
+                } else {
+                    userNameError = false
+                }
+
+                if (email.isBlank()) {
+                    emailError = true
+                    isValid = false
+                } else {
+                    emailError = false
+                }
+
+                if (password.isBlank()) {
+                    passwordError = true
+                    isValid = false
+                } else {
+                    passwordError = false
+                }
+
+                if (confirmPassword.isBlank()) {
+                    confirmPasswordError = true
+                    isValid = false
+                } else {
+                    confirmPasswordError = false
+                }
+
+                if (password != confirmPassword) {
+                    confirmPasswordError = true
+                    isValid = false
+                    Toast.makeText(context, "Passwords do not match", Toast.LENGTH_SHORT).show()
+                }
+
+                if (isValid) {
+
+                    authViewModel.signup(email, password)
+
+
+//                    if(selectedRole=="User"){
+//
+//                        val newUser = User(
+//                            name = userName,
+//                            email = email,
+//                            password = password,
+//                            host = false
+//                        )
+//                        addUserToFirestore(newUser, onSuccessListener = {
+//                            Toast.makeText(context, " Register successfully", Toast.LENGTH_SHORT).show()
+//                            navController.navigate("homescreen")
+//
+//                        }, onFailureListener = {
+//                            Toast.makeText(context, " Register failed", Toast.LENGTH_SHORT).show()
+//                        })
+//
+//                    }
+//                    else if(selectedRole=="Foundation"){
+//
+//                        val newFoundation = Foundation(
+//                            name = userName,
+//                            email = email,
+//                            password = password,
+//                        )
+//
+//                        addFoundationToFirestore(newFoundation, onSuccessListener =  {
+//                                Toast.makeText(context, "Register successfully", Toast.LENGTH_SHORT).show()
+//                                navController.navigate("homescreen")
+//                                }, onFailureListener =  {
+//                                    Toast.makeText(context, "Register failed", Toast.LENGTH_SHORT).show()
+//                                }
+//
+//                        )
+//                    }
+                }
+            },
+            enabled = authState.value != AuthState.Loading,
+
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(start = 30.dp, end = 30.dp)
+                .height(50.dp)
+                .background(
+                    brush = Brush.linearGradient(
+                        colors = listOf(Color(0xFF000000), Color(0xFF3533CD)),
+                        start = Offset(
+                            0f,
+                            0f
                         ),
-                        shape = RoundedCornerShape(30.dp)
+                        end = Offset(
+                            Float.POSITIVE_INFINITY,
+                            Float.POSITIVE_INFINITY
+                        )
                     ),
-
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = Color.Transparent,
-                    contentColor = Color.White
-
+                    shape = RoundedCornerShape(30.dp)
                 ),
 
-                ) {
-                Text(
-                    text = stringResource(R.string.sign_up),
-                    color = Color.White,
+            colors = ButtonDefaults.buttonColors(
+                containerColor = Color.Transparent,
+                contentColor = Color.White
 
-                    fontSize = 15.sp
-                )
+            ),
 
-            }
+            ) {
+            Text(
+                text = stringResource(R.string.sign_up),
+                color = Color.White,
+
+                fontSize = 15.sp
+            )
+
+        }
 
 
     }
 }
+
+
+

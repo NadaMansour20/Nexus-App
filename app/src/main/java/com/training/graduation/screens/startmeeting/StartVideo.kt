@@ -32,6 +32,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import com.training.graduation.R
 import org.jitsi.meet.sdk.JitsiMeetActivity
 import org.jitsi.meet.sdk.JitsiMeetConferenceOptions
@@ -40,7 +41,9 @@ import java.net.URL
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun JitsiMeetCompose() {
+fun JitsiMeetCompose(navController: NavController) {
+
+
     var roomName by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     var roomNameError by remember { mutableStateOf(false) }
@@ -65,7 +68,7 @@ fun JitsiMeetCompose() {
                 onValueChange = {
                     roomName = it
                     roomNameError = it.isBlank()
-                                },
+                },
                 label = { Text(stringResource(R.string.meeting_name)) },
                 isError = roomNameError,
                 supportingText = {
@@ -83,7 +86,7 @@ fun JitsiMeetCompose() {
                 onValueChange = {
                     password = it
                     passwordError=it.isBlank()
-                                },
+                },
                 label = { Text(stringResource(R.string.password)) },
                 isError = passwordError,
                 supportingText = {
@@ -99,18 +102,20 @@ fun JitsiMeetCompose() {
             Button(
                 onClick = {
                     if (roomName.isBlank()) {
-                    roomNameError = true
-                } else {
-                    roomNameError= false
-                    startJitsiMeeting(context, roomName, password)
-                }
+                        roomNameError = true
+                    } else {
+                        roomNameError= false
+                        startJitsiMeeting(context, roomName, password)
+
+                    }
                     if (password.isBlank()) {
                         passwordError = true
                     } else {
                         passwordError= false
                         startJitsiMeeting(context, roomName, password)
+
                     }
-                          },
+                },
                 modifier = Modifier.fillMaxWidth().background(
                     brush = Brush.linearGradient(
                         colors = listOf(Color(0xFF000000), Color(0xFF3533CD)),
@@ -123,16 +128,16 @@ fun JitsiMeetCompose() {
                             Float.POSITIVE_INFINITY
                         )
                     ),
-            shape = RoundedCornerShape(30.dp)
-            ),
+                    shape = RoundedCornerShape(30.dp)
+                ),
 
-            colors = ButtonDefaults.buttonColors(
-                containerColor = Color.Transparent,
-                contentColor = Color.White
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = Color.Transparent,
+                    contentColor = Color.White
 
-            ),
+                ),
 
-            ) {
+                ) {
                 Text(stringResource(R.string.join_meeting))
             }
 

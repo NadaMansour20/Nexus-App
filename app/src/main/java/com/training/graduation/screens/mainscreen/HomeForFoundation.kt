@@ -1,5 +1,6 @@
 package com.training.graduation.screens.mainscreen
 
+
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
@@ -49,8 +50,7 @@ import com.training.graduation.screens.startmeeting.QuestionsDialog
 
 
 @Composable
-fun HomeScreen(modifier: Modifier,navController:NavController,authViewModel: AuthViewModel, innerpadding: PaddingValues) {
-
+fun HomeForFoundation(modifier: Modifier,navController:NavController,authViewModel: AuthViewModel, innerpadding: PaddingValues) {
 
     var showDialog by remember { mutableStateOf(false) } // State to control dialog visibility
 
@@ -146,28 +146,22 @@ fun HomeScreen(modifier: Modifier,navController:NavController,authViewModel: Aut
                     .fillMaxWidth()
                     .padding(start = 20.dp, end = 20.dp)
             ) {
-                Card(onClick = {
-                    navController.navigate("schedule")
-
-                },
+                Card(
+                    onClick = {
+                        navController.navigate("schedule")
+                    },
                     modifier = Modifier
                         .weight(1f)
                         .padding(end = 10.dp)
                         .height(120.dp),
-                    shape = RoundedCornerShape(
-                        topStart = 30.dp,
-                        topEnd = 30.dp,
-                        bottomEnd = 30.dp,
-                        bottomStart = 30.dp
-                    ),
+                    shape = RoundedCornerShape(30.dp),
                     colors = CardDefaults.cardColors(Color(0xF4C2C2).copy(alpha = 1f))
-
                 ) {
                     Box(
                         modifier = Modifier.fillMaxSize(),
                         contentAlignment = Alignment.Center
                     ) {
-                        Column (horizontalAlignment = Alignment.CenterHorizontally){
+                        Column(horizontalAlignment = Alignment.CenterHorizontally) {
                             Icon(
                                 painter = painterResource(id = R.drawable.icon_schedule),
                                 contentDescription = "null",
@@ -179,10 +173,48 @@ fun HomeScreen(modifier: Modifier,navController:NavController,authViewModel: Aut
                         }
                     }
                 }
-                Card(onClick = {},
+
+                Card(
+                    onClick = {},
                     modifier = Modifier
                         .weight(1f)
                         .padding(start = 10.dp)
+                        .height(120.dp),
+                    shape = RoundedCornerShape(30.dp),
+                    colors = CardDefaults.cardColors(Color(0xfcf6bd).copy(alpha = 0.8f))
+                ) {
+                    Box(
+                        modifier = Modifier.fillMaxSize(),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                            val image = painterResource(id = R.drawable.questionform)
+
+                            Image(
+                                painter = image,
+                                contentDescription = "question form",
+                                modifier = Modifier.size(25.dp)
+                            )
+                            Spacer(Modifier.padding(top = 5.dp))
+                            Text(stringResource(R.string.question_form), fontWeight = FontWeight.SemiBold)
+                        }
+                    }
+                }
+            }
+            Spacer(modifier = Modifier.height(20.dp))
+
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(start = 20.dp, end = 20.dp)
+            ) {
+                Card(
+                    onClick = {
+
+                    },
+                    modifier = Modifier
+                        .fillMaxWidth(0.5f)
+                        .padding(top = 10.dp)
                         .height(120.dp),
                     shape = RoundedCornerShape(30.dp),
                     colors = CardDefaults.cardColors(Color.Gray.copy(alpha = 0.1f))
@@ -192,21 +224,21 @@ fun HomeScreen(modifier: Modifier,navController:NavController,authViewModel: Aut
                         contentAlignment = Alignment.Center
                     ) {
                         Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                            val image = painterResource(id =R.drawable.ai_assest)
+                            val image = painterResource(id = R.drawable.ai_assest)
 
                             Image(
                                 painter = image,
                                 contentDescription = "ai asset",
                                 modifier = Modifier.size(60.dp)
-
                             )
                             Spacer(Modifier.padding(top = 5.dp))
-                            //Text("AI Asset", fontWeight = FontWeight.Bold)
-                            Text(stringResource(R.string.comming_soon), fontWeight = FontWeight.SemiBold)
+                            Text(
+                                stringResource(R.string.comming_soon),
+                                fontWeight = FontWeight.SemiBold
+                            )
                         }
                     }
                 }
-
             }
 
         }
@@ -215,20 +247,22 @@ fun HomeScreen(modifier: Modifier,navController:NavController,authViewModel: Aut
 
 
     }
+
+
 }
 
 
 
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
-fun HomeScreenPreview() {
+fun HomeForFoundationPreview() {
     HomeScreen(modifier = Modifier, navController = NavController(LocalContext.current), authViewModel = AuthViewModel(), innerpadding = PaddingValues())
 
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SearchBar(
+fun SearchBar1(
     modifier: Modifier = Modifier,
     placeholder: String = stringResource(R.string.search),
     onSearch: (String) -> Unit
@@ -261,7 +295,7 @@ fun SearchBar(
 
         modifier = modifier
             .fillMaxWidth()
-            .padding(horizontal = 16.dp)
+            .padding(horizontal = 9.dp)
             .height(56.dp),
         shape = RoundedCornerShape(25.dp),
     )

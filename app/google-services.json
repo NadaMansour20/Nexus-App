@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "441594866972",
+    "project_id": "nexus-c1640",
+    "storage_bucket": "nexus-c1640.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:441594866972:android:179645ad7aba2ebf379ed9",
+        "android_client_info": {
+          "package_name": "com.training.graduation"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCObbLT_P6JpM_jFQS0o3OnbWbu4zfGfgY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

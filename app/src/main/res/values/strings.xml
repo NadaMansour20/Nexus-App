@@ -88,4 +88,9 @@
     <string name="you_are_invited_to_join_the_meeting_click_the_link_below">You are invited to join the meeting. Click the link below:\n%1$s</string>
     <string name="send_invitation">Send Invitation</string>
     <string name="join_meeting">Join Meeting</string>
+    <string name="please_enter_username">Please enter user name\n</string>
+    <string name="please_enter_email">Please enter email</string>
+    <string name="please_enter_confirm_password">Please confirm password</string>
+    <string name="register_successfully">Register Successfully</string>
+    <string name="question_form">Question Form</string>
 </resources>

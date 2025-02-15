@@ -8,10 +8,10 @@
             <InsightsFilterSettings>
               <option name="connection">
                 <ConnectionSetting>
-                  <option name="appId" value="PLACEHOLDER" />
-                  <option name="mobileSdkAppId" value="" />
-                  <option name="projectId" value="" />
-                  <option name="projectNumber" value="" />
+                  <option name="appId" value="com.training.graduation" />
+                  <option name="mobileSdkAppId" value="1:441594866972:android:179645ad7aba2ebf379ed9" />
+                  <option name="projectId" value="nexus-c1640" />
+                  <option name="projectNumber" value="441594866972" />
                 </ConnectionSetting>
               </option>
               <option name="signal" value="SIGNAL_UNSPECIFIED" />

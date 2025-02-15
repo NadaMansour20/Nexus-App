@@ -2,6 +2,8 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
+    id("com.google.gms.google-services")
+
 }
 
 android {
@@ -28,14 +30,17 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
+        sourceCompatibility = JavaVersion.VERSION_19
+        targetCompatibility = JavaVersion.VERSION_19
     }
     kotlinOptions {
-        jvmTarget = "11"
+        jvmTarget = "19"
     }
     buildFeatures {
         compose = true
+    }
+    packagingOptions {
+        exclude ("META-INF/native-image/org.mongodb/bson/native-image.properties")
     }
 }
 
@@ -53,6 +58,7 @@ dependencies {
     implementation(libs.androidx.benchmark.macro)
     implementation(libs.material)
     implementation(libs.androidx.material3.android)
+    implementation(libs.androidx.runtime.livedata)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -78,9 +84,40 @@ dependencies {
     }
     implementation ("org.jitsi.react:jitsi-meet-sdk:10.3.0")
 
-    implementation ("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation ("com.squareup.retrofit2:retrofit:2.11.0")
     implementation ("com.squareup.retrofit2:converter-gson:2.9.0")
     implementation ("com.squareup.okhttp3:logging-interceptor:4.9.3")
+
+
+        // Realm Kotlin SDK
+    implementation("io.realm.kotlin:library-base:1.16.0")
+
+        // Coroutine support (مطلوب لأن Realm يعمل مع الكوروتين)
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.9.0")
+    implementation("io.realm.kotlin:library-sync:1.16.0")
+
+    coreLibraryDesugaring ("com.android.tools:desugar_jdk_libs:2.1.4")
+
+
+    implementation(libs.mongodb.driver.sync)
+
+
+    implementation(libs.bcrypt)
+
+    //firebase
+    implementation(platform("com.google.firebase:firebase-bom:33.9.0"))
+    implementation("com.google.firebase:firebase-analytics")
+    implementation("com.google.firebase:firebase-auth")
+
+    //fire store
+    implementation("com.google.firebase:firebase-firestore")
+
+
+
+//    // Microsoft Identity Client
+
+    implementation("com.microsoft.identity.client:msal:1.4.0")
+
 
 
 
