@@ -85,6 +85,8 @@ dependencies {
         isTransitive = true
     }
     implementation ("org.jitsi.react:jitsi-meet-sdk:10.3.0")
+    implementation ("com.google.firebase:firebase-messaging")
+
 
     implementation ("com.squareup.retrofit2:retrofit:2.11.0")
     implementation ("com.squareup.retrofit2:converter-gson:2.9.0")
@@ -119,6 +121,11 @@ dependencies {
 //    // Microsoft Identity Client
 
     implementation("com.microsoft.identity.client:msal:1.4.0")
+
+    implementation ("com.github.bumptech.glide:glide:4.16.0")
+
+    implementation ("com.sun.mail:android-mail:1.6.6")
+    implementation ("com.sun.mail:android-activation:1.6.6")
 
 
 

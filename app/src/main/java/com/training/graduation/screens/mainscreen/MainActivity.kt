@@ -16,6 +16,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.google.firebase.messaging.FirebaseMessaging
 import com.training.graduation.onboarding.OnboardingScreen
 import com.training.graduation.screens.Authentication.AuthViewModel
 import com.training.graduation.screens.chat.ChatListScreen
@@ -43,6 +44,16 @@ class MainActivity : ComponentActivity() {
 
         // Apply saved language on app launch
         UpdateLocale(this, preferenceManager.getLanguage())
+
+        FirebaseMessaging.getInstance().token.addOnCompleteListener { task ->
+            if (task.isSuccessful) {
+                val token = task.result
+                Log.d("FCM_TOKEN", token)
+                // ممكن تبعته لسيرفرك هنا
+            } else {
+                Log.e("FCM_TOKEN", "Token fetch failed", task.exception)
+            }
+        }
 
         setContent {
             GraduationTheme {
