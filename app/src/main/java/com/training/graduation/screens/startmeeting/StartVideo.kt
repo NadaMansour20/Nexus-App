@@ -1,8 +1,10 @@
 package com.training.graduation.screens.startmeeting
 
+import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
-import android.widget.Toast
+import android.content.IntentFilter
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -20,10 +22,14 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
@@ -33,18 +39,15 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.viewinterop.AndroidView
+import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.navigation.NavController
+import com.google.firebase.auth.FirebaseAuth
 import com.training.graduation.R
-import com.training.graduation.following.fetchWebhookEvents
-import com.training.graduation.following.trackUserEvent
-import com.training.graduation.token.RetrofitBuild
-import com.training.graduation.token.TokenRequest
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import org.jitsi.meet.sdk.JitsiMeetActivity
+import org.jitsi.meet.sdk.BroadcastEvent
 import org.jitsi.meet.sdk.JitsiMeetConferenceOptions
 import org.jitsi.meet.sdk.JitsiMeetUserInfo
+import org.jitsi.meet.sdk.JitsiMeetView
 import java.net.URL
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -55,7 +58,39 @@ fun JitsiMeetCompose(navController: NavController) {
     var password by remember { mutableStateOf("") }
     var roomNameError by remember { mutableStateOf(false) }
     var passwordError by remember { mutableStateOf(false) }
+    val participants = remember { mutableStateListOf<String>() }
     val context = LocalContext.current
+    val currentUser = FirebaseAuth.getInstance().currentUser
+    val userName = currentUser?.displayName ?: currentUser?.email?.substringBefore("@") ?: "Guest"
+    val email = currentUser?.email ?: "guest@example.com"
+
+
+    // اعملي receiver هنا
+    val receiver = remember {
+        createJitsiBroadcastReceiver { newList ->
+            participants.clear()
+            participants.addAll(newList)
+        }
+    }
+
+    LaunchedEffect(Unit) {
+        val intentFilter = IntentFilter().apply {
+            addAction("org.jitsi.meet.CONFERENCE_JOINED")
+            addAction("org.jitsi.meet.CONFERENCE_TERMINATED")
+            addAction("org.jitsi.meet.PARTICIPANT_JOINED")
+            addAction("org.jitsi.meet.PARTICIPANT_LEFT")
+        }
+        LocalBroadcastManager.getInstance(context)
+            .registerReceiver(receiver, intentFilter)
+    }
+
+    DisposableEffect(Unit) {
+        onDispose {
+            LocalBroadcastManager.getInstance(context)
+                .unregisterReceiver(receiver)
+        }
+    }
+
 
     Scaffold(
         topBar = {
@@ -123,12 +158,19 @@ fun JitsiMeetCompose(navController: NavController) {
                     if (roomName.isNotBlank() && password.isNotBlank()) {
                         roomNameError = false
                         passwordError = false
-                        startJitsiMeeting(context, roomName, password)
+                        val intent = Intent(context, JitsiMeetStandaloneActivity::class.java).apply {
+                            putExtra("room", roomName)
+                            putExtra("userName", userName)
+                            putExtra("email", email)
+                        }
+                        context.startActivity(intent)
                     } else {
                         roomNameError = roomName.isBlank()
                         passwordError = password.isBlank()
                     }
+
                 },
+
                 modifier = Modifier
                     .fillMaxWidth()
                     .background(
@@ -179,101 +221,14 @@ fun JitsiMeetCompose(navController: NavController) {
 
             Spacer(modifier = Modifier.height(20.dp))
 
-            // ✅ زر Fetch Webhook Events
-            Button(
-                onClick = {
-                    fetchWebhookEvents()
-                },
-                modifier = Modifier.fillMaxWidth(),
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = Color.Gray,
-                    contentColor = Color.White
-                )
-            ) {
-                Text("🔍 Show Webhook Events")
+            Text("👥 Participants:", fontWeight = FontWeight.Bold)
+
+            participants.forEach { name ->
+                Text(text = name)
             }
         }
     }
-}
 
-
-fun startJitsiMeeting(context: Context, roomName: String, password: String){
-    if (roomName.isBlank() || password.isBlank()) return
-
-    val scope = CoroutineScope(Dispatchers.Main)
-    val userName = "Nada" // تقدرِ تخليه dynamic بعدين
-
-    scope.launch {
-        val request = TokenRequest(
-            name = userName,
-            email = "$userName@email.com",
-            room ="vpaas-magic-cookie-5539cb854a4d47aba650f080c97d11b9/01f783/$roomName",
-            isModerator = true
-        )
-
-        try {
-            val response = RetrofitBuild.get_api().getToken(request)
-
-            if (response.isSuccessful) {
-                val token = response.body()?.token ?: return@launch
-                val serverURL = URL("https://jaas.8x8.vc")
-
-                val options = JitsiMeetConferenceOptions.Builder()
-                    .setServerURL(serverURL)
-                    .setRoom(roomName)
-                    .setToken(token)
-                    .setAudioMuted(true)
-                    .setVideoMuted(true)
-                    .setUserInfo(
-                        JitsiMeetUserInfo().apply {
-                            displayName = userName
-                            email = "$userName@email.com"
-                        }
-                    )
-                    .setFeatureFlag("welcomepage.enabled", true)
-                    .setFeatureFlag("add-people.enabled", true)
-                    .setFeatureFlag("conference-timer.enabled", true)
-                    .setFeatureFlag("require-display-name", false)
-                    .setFeatureFlag("start-without-moderator", true)
-                    .setFeatureFlag("security-options.enabled", true)
-                    .setFeatureFlag("joinBeforeHost", true)
-                    .setFeatureFlag("chat.enabled", true)
-                    .setFeatureFlag("close-captions.enabled", true)
-                    .setFeatureFlag("invite.enabled", true)
-                    .setFeatureFlag("live-streaming.enabled", true)
-                    .setFeatureFlag("meeting-name.enabled", true)
-                    .setFeatureFlag("meeting-password.enabled", true)
-                    .setFeatureFlag("pip.enabled", true)
-                    .setFeatureFlag("raise-hand.enabled", true)
-                    .setFeatureFlag("recording.enabled", true)
-                    .setFeatureFlag("tile-view.enabled", true)
-                    .setFeatureFlag("video-share.enabled", true)
-                    .setFeatureFlag("screen-sharing.enabled", true)
-                    .setFeatureFlag("resolution", 720)
-                    .setFeatureFlag("lobby-mode.enabled", false)
-                    .setFeatureFlag("notifications.enabled", true)
-                    .setFeatureFlag("prejoinpage.enabled", true)
-                    .setFeatureFlag("filmstrip.enabled", true)
-                    .setFeatureFlag("overflow-menu.enabled", true)
-                    .setFeatureFlag("server-url-change.enabled", false)
-                    .setFeatureFlag("speakerstats.ordering.enabled", true)
-                    .setFeatureFlag("audio-mute.enabled", true)
-                    .setFeatureFlag("video-mute.enabled", true)
-                    .setFeatureFlag("audio-only.enabled", false)
-                    .setFeatureFlag("calendar.enabled", false)
-                    .setFeatureFlag("call-integration.enabled", false)
-                    .setFeatureFlag("live-streaming.url", "https://youtube.com/live/stream_key_here")
-                    .build()
-
-                JitsiMeetActivity.launch(context, options)
-                trackUserEvent()
-            } else {
-                Toast.makeText(context, "Failed to get token", Toast.LENGTH_SHORT).show()
-            }
-        } catch (e: Exception) {
-            Toast.makeText(context, "Error: ${e.message}", Toast.LENGTH_LONG).show()
-        }
-    }
 }
 
 fun sendInvitation(context: Context, roomName: String, password: String) {
@@ -292,4 +247,43 @@ fun sendInvitation(context: Context, roomName: String, password: String) {
 
     context.startActivity(Intent.createChooser(intent, "Send Invitation via"))
 }
+
+val participantMap = mutableMapOf<String, String>()
+
+fun createJitsiBroadcastReceiver(
+    onParticipantsUpdated: (List<String>) -> Unit
+): BroadcastReceiver {
+    return object : BroadcastReceiver() {
+        override fun onReceive(context: Context, intent: Intent?) {
+            if (intent == null) return
+            val event = BroadcastEvent(intent)
+            when (event.type) {
+                BroadcastEvent.Type.CONFERENCE_JOINED -> {
+                    participantMap.clear()
+                    // ممكن تضيف نفسك في الليستة هنا لو حابة
+                }
+                BroadcastEvent.Type.PARTICIPANT_JOINED -> {
+                    val id = event.data["participantId"]?.toString() ?: return
+                    val name = event.data["name"]?.toString() ?: "Unknown"
+                    participantMap[id] = name
+                    onParticipantsUpdated(participantMap.values.toList())
+                }
+                BroadcastEvent.Type.PARTICIPANT_LEFT -> {
+                    val id = event.data["participantId"]?.toString() ?: return
+                    participantMap.remove(id)
+                    onParticipantsUpdated(participantMap.values.toList())
+                }
+                BroadcastEvent.Type.CONFERENCE_TERMINATED -> {
+                    participantMap.clear()
+                    onParticipantsUpdated(participantMap.values.toList())
+                }
+                else -> {}
+            }
+        }
+    }
+}
+
+
+
+
 

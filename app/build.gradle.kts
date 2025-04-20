@@ -40,7 +40,13 @@ android {
         compose = true
     }
     packagingOptions {
-        exclude ("META-INF/native-image/org.mongodb/bson/native-image.properties")
+        resources {
+            excludes += "META-INF/NOTICE.md"
+            excludes += "META-INF/LICENSE.md"
+            excludes += "META-INF/LICENSE-notice.md"
+            excludes += "META-INF/native-image/org.mongodb/bson/native-image.properties"
+
+        }
     }
 }
 
@@ -84,7 +90,7 @@ dependencies {
     implementation("org.jitsi.react:jitsi-meet-sdk:+") {
         isTransitive = true
     }
-    implementation ("org.jitsi.react:jitsi-meet-sdk:10.3.0")
+    implementation ("org.jitsi.react:jitsi-meet-sdk:11.1.4")
     implementation ("com.google.firebase:firebase-messaging")
 
 

@@ -1,65 +1,46 @@
 package com.training.graduation.following
 
+import android.content.BroadcastReceiver
+import android.content.Context
+import android.content.Intent
 import android.util.Log
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
-import retrofit2.http.Body
-import retrofit2.http.GET
-import retrofit2.http.POST
+import org.jitsi.meet.sdk.BroadcastEvent
 
-data class EventPayload(
-    val event: String,
-    val userId: String,
-    val name: String,
-    val room: String
-)
+class MyJitsiBroadcastReceiver : BroadcastReceiver() {
+    override fun onReceive(context: Context, intent: Intent?) {
+        if (intent == null) return
 
-data class EventLog(
-    val time: String,
-    val event: String,
-    val data: Map<String, Any>
-)
+        val participantMap = mutableMapOf<String, String>()
 
-interface WebhookApi {
-    @POST("/webhook")
-    fun sendEvent(@Body payload: EventPayload): Call<Void>
 
-    @GET("/events")
-    fun getEvents(): Call<List<EventLog>>
-}
-
-fun trackUserEvent() {
-    val payload = EventPayload(
-        event = "mobile-user-joined",
-        userId = "user123",
-        name = "Nada",
-        room = "test-room"
-    )
-
-    RetrofitBuild.get_webhook_api().sendEvent(payload).enqueue(object : Callback<Void> {
-        override fun onResponse(call: Call<Void>, response: Response<Void>) {
-            Log.d("Webhook", "✅ Event sent successfully")
-        }
-
-        override fun onFailure(call: Call<Void>, t: Throwable) {
-            Log.e("Webhook", "❌ Failed to send event: ${t.message}")
-        }
-    })
-}
-
-fun fetchWebhookEvents() {
-    RetrofitBuild.get_webhook_api().getEvents().enqueue(object : Callback<List<EventLog>> {
-        override fun onResponse(call: Call<List<EventLog>>, response: Response<List<EventLog>>) {
-            val logs = response.body() ?: return
-            for (log in logs) {
-                Log.d("JITSI_WEBHOOK", "🕒 ${log.time} - 📣 ${log.event}")
-                Log.d("JITSI_WEBHOOK", "📦 Data: ${log.data}")
+        val event = BroadcastEvent(intent)
+        when (event.type) {
+            BroadcastEvent.Type.CONFERENCE_JOINED -> {
+                Log.d("JitsiEvent", "✅ Conference joined: ${event.data["url"]}")
+            }
+            BroadcastEvent.Type.CONFERENCE_TERMINATED -> {
+                Log.d("JitsiEvent", "❌ Conference terminated: ${event.data["url"]}")
+            }
+            BroadcastEvent.Type.PARTICIPANT_JOINED -> {
+                val id = event.data["participantId"]?.toString() ?: return
+                val name = event.data["name"]?.toString() ?: "Unknown"
+                participantMap[id] = name
+                Log.d("JitsiEvent", "👤 Participant joined: $name ($id)")
+                Log.d("JitsiEvent", "👤 Participant joined: ${event.data}")
+            }
+            BroadcastEvent.Type.PARTICIPANT_LEFT -> {
+                val id = event.data["participantId"]?.toString() ?: return
+                val name = participantMap[id] ?: "Unknown"
+                Log.d("JitsiEvent", "👋 Participant left: $name")
+                participantMap.remove(id)
+                Log.d("JitsiEvent", "👤 Participant left: ${event.data}")
+            }
+            BroadcastEvent.Type.CHAT_MESSAGE_RECEIVED -> {
+                Log.d("JitsiEvent", "💬 Chat message: ${event.data["message"]}")
+            }
+            else -> {
+                Log.d("JitsiEvent", "📢 Event received: ${event.type}")
             }
         }
-
-        override fun onFailure(call: Call<List<EventLog>>, t: Throwable) {
-            Log.e("JITSI_WEBHOOK", "❌ Failed to fetch events: ${t.message}")
-        }
-    })
+    }
 }

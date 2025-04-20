@@ -1,22 +1,17 @@
-package com.training.graduation.token
-
 import retrofit2.Response
-import retrofit2.http.Body
-import retrofit2.http.POST
-
-data class TokenRequest(
-    val name: String,
-    val email: String,
-    val room: String,
-    val isModerator: Boolean
-)
+import retrofit2.http.GET
+import retrofit2.http.Query
 
 data class TokenResponse(
     val token: String
 )
 
-
 interface TokenApi {
-    @POST("/get-token")
-    suspend fun getToken(@Body request: TokenRequest): Response<TokenResponse>
+    @GET("/token")
+    suspend fun getToken(
+        @Query("name") name: String,
+        @Query("email") email: String,
+        @Query("room") room: String,
+        @Query("moderator") isModerator: Boolean
+    ): Response<TokenResponse>
 }
