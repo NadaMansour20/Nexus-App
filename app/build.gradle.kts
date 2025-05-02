@@ -134,6 +134,11 @@ dependencies {
     implementation ("com.sun.mail:android-activation:1.6.6")
 
 
+    implementation ("com.onesignal:OneSignal:5.1.31")
+
+
+    implementation ("com.google.accompanist:accompanist-webview:0.32.0")
+    implementation ("androidx.compose.runtime:runtime-livedata:1.6.5")
 
 
 

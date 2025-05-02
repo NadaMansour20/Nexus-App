@@ -4,9 +4,11 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.training.graduation.db.model.User
+import scheduleNotification
 
 class AuthViewModel : ViewModel() {
 
@@ -102,6 +104,36 @@ class AuthViewModel : ViewModel() {
                 _currentUser.value = updatedUser
             }
     }
+
+    fun addMeetingToUserSchedule(
+        userId: String,
+        title: String,
+        description: String,
+        meetingTimeMillis: Long,
+        meetingLink: String
+    ) {
+        val db = FirebaseFirestore.getInstance()
+
+        val meeting = hashMapOf(
+            "title" to title,
+            "description" to description,
+            "meetingTime" to meetingTimeMillis,
+            "meetingLink" to meetingLink
+        )
+
+        db.collection("users")
+            .document(userId)
+            .collection("schedule")
+            .add(meeting)
+            .addOnSuccessListener {
+                // بعد التخزين ابعت نوتيفيكيشن
+                scheduleNotification(meetingTimeMillis,title,description,meetingLink)
+            }
+            .addOnFailureListener { e ->
+                println("❌ Error adding meeting: $e")
+            }
+    }
+
 
     fun signout() {
         auth.signOut()

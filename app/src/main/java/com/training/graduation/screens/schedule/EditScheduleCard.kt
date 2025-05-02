@@ -18,7 +18,13 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 import com.training.graduation.R
+import com.training.graduation.screens.Authentication.AuthViewModel
+import scheduleNotification
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -59,6 +65,8 @@ fun ScheduleInputs(onClose: () -> Unit) {
     var meetingDescriptionError by remember { mutableStateOf(false) }
     var selectDateError by remember { mutableStateOf(false) }
     var selectedTimeError by remember { mutableStateOf(false) }
+
+    val scheduleViewModel: AuthViewModel = viewModel()
 
 
     Column(
@@ -227,25 +235,31 @@ fun ScheduleInputs(onClose: () -> Unit) {
         )
         Row {
             Button(onClick = {
-                if (meetingName.isBlank()) {
-                    meetingNameError = true
-                } else {
-                    meetingNameError= false
-                }
-                if (meetingDescription.isBlank()) {
-                    meetingDescriptionError = true
-                } else {
-                    meetingDescriptionError= false
-                }
-                if (selectedTime.isBlank()) {
-                    selectedTimeError = true
-                } else {
-                    selectedTimeError= false
-                }
-                if (selectedDate.isBlank()) {
-                    selectDateError = true
-                } else {
-                    selectDateError= false
+                if (meetingName.isBlank()) meetingNameError = true
+                if (meetingDescription.isBlank()) meetingDescriptionError = true
+                if (selectedDate.isBlank()) selectDateError = true
+                if (selectedTime.isBlank()) selectedTimeError = true
+
+                if (!meetingNameError && !meetingDescriptionError && !selectDateError && !selectedTimeError) {
+                    val dateTimeString = "$selectedDate $selectedTime"
+                    val format = SimpleDateFormat("EEEE, MMMM dd, yyyy hh:mm a", Locale.getDefault())
+                    val meetingDate = format.parse(dateTimeString)
+
+                    meetingDate?.let { date ->
+                        val meetingTimeMillis = date.time
+                        val meetingLink = "https://meet.jit.si/$meetingName"
+                        val currentUserId = Firebase.auth.currentUser?.uid
+
+                        currentUserId?.let { uid ->
+                            scheduleViewModel.addMeetingToUserSchedule(
+                                userId = uid,
+                                title = meetingName,
+                                description = meetingDescription,
+                                meetingTimeMillis = meetingTimeMillis,
+                                meetingLink = meetingLink
+                            )
+                        }
+                    }
                 }
             }) {
                 Text(stringResource(R.string.Save))

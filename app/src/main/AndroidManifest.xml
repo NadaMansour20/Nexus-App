@@ -38,9 +38,9 @@
             </intent-filter>
         </activity>
 
-        <activity
-            android:name=".screens.startmeeting.JitsiMeetStandaloneActivity"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+        <!--        <activity-->
+<!--            android:name=".screens.startmeeting."-->
+<!--            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />-->
 
 
         <receiver

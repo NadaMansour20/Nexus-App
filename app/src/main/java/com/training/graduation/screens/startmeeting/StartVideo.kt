@@ -1,5 +1,6 @@
 package com.training.graduation.screens.startmeeting
 
+import JitsiMeetingScreen
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
@@ -63,6 +64,7 @@ fun JitsiMeetCompose(navController: NavController) {
     val currentUser = FirebaseAuth.getInstance().currentUser
     val userName = currentUser?.displayName ?: currentUser?.email?.substringBefore("@") ?: "Guest"
     val email = currentUser?.email ?: "guest@example.com"
+
 
 
     // اعملي receiver هنا
@@ -158,12 +160,13 @@ fun JitsiMeetCompose(navController: NavController) {
                     if (roomName.isNotBlank() && password.isNotBlank()) {
                         roomNameError = false
                         passwordError = false
-                        val intent = Intent(context, JitsiMeetStandaloneActivity::class.java).apply {
-                            putExtra("room", roomName)
-                            putExtra("userName", userName)
-                            putExtra("email", email)
-                        }
-                        context.startActivity(intent)
+
+//                        val intent = Intent(context, JitsiMeetStandaloneActivity::class.java).apply {
+//                            putExtra("room", roomName)
+//                            putExtra("userName", userName)
+//                            putExtra("email", email)
+//                        }
+//                        context.startActivity(intent)
                     } else {
                         roomNameError = roomName.isBlank()
                         passwordError = password.isBlank()
