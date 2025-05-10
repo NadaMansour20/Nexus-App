@@ -1,6 +1,7 @@
 package com.training.graduation.screens.schedule
 
 import android.content.Context
+import android.widget.Toast
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -24,7 +25,7 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import com.training.graduation.R
 import com.training.graduation.screens.Authentication.AuthViewModel
-import scheduleNotification
+import scheduleNotificationFromApp
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -258,7 +259,12 @@ fun ScheduleInputs(onClose: () -> Unit) {
                                 meetingTimeMillis = meetingTimeMillis,
                                 meetingLink = meetingLink
                             )
+                            scheduleNotificationFromApp(meetingName, meetingTimeMillis, playerId = "6aa55a93-392c-4255-9687-452645823dd6"
+                            )
+
                         }
+                        Toast.makeText(context, "Meeting scheduled successfully", Toast.LENGTH_SHORT).show()
+                        onClose()
                     }
                 }
             }) {

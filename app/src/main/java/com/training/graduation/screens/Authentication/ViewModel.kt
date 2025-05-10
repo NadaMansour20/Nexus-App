@@ -8,7 +8,6 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.training.graduation.db.model.User
-import scheduleNotification
 
 class AuthViewModel : ViewModel() {
 
@@ -126,12 +125,40 @@ class AuthViewModel : ViewModel() {
             .collection("schedule")
             .add(meeting)
             .addOnSuccessListener {
-                // بعد التخزين ابعت نوتيفيكيشن
-                scheduleNotification(meetingTimeMillis,title,description,meetingLink)
             }
             .addOnFailureListener { e ->
                 println("❌ Error adding meeting: $e")
             }
+    }
+
+    fun getUserScheduledMeetings(
+        userId: String,
+        onResult: (List<Map<String, Any>>) -> Unit,
+        onError: (Exception) -> Unit
+    ) {
+        val db = FirebaseFirestore.getInstance()
+
+        db.collection("users")
+            .document(userId)
+            .collection("schedule")
+            .get()
+            .addOnSuccessListener { result ->
+                val meetings = result.documents.mapNotNull { it.data }
+                onResult(meetings)
+            }
+            .addOnFailureListener { exception ->
+                onError(exception)
+            }
+    }
+    fun deleteMeeting(userId: String, meetingId: String, onSuccess: () -> Unit, onError: (Exception) -> Unit) {
+        FirebaseFirestore.getInstance()
+            .collection("users")
+            .document(userId)
+            .collection("schedule")
+            .document(meetingId)
+            .delete()
+            .addOnSuccessListener { onSuccess() }
+            .addOnFailureListener { e -> onError(e) }
     }
 
 
@@ -144,6 +171,8 @@ class AuthViewModel : ViewModel() {
     fun resetAuthState() {
         _authState.value = AuthState.Unauthenticated
     }
+
+
 
 }
 

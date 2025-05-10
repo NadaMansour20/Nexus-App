@@ -1,6 +1,5 @@
 package com.training.graduation.screens.mainscreen
 
-import JitsiMeetingScreen
 import SignupScreen
 import android.os.Bundle
 import android.util.Log
@@ -47,7 +46,6 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
 
-        OneSignal.initWithContext(this, Constent.ON_SIGNAL_APP_ID)
 
         val deviceState = OneSignal.User.pushSubscription
         Log.e("OneSignalCheck", "Player ID = ${deviceState?.id}")
@@ -90,7 +88,6 @@ class MainActivity : ComponentActivity() {
                         preferenceManager,
                         authViewModel
                     )
-                    JitsiMeetingScreen("meeting")
                 }
             }
         }
